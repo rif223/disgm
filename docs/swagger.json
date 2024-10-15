@@ -1,0 +1,2830 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "API for managing Discord guilds using DiscordGo and Fiber.",
+        "title": "Discord Guild Management API",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "localhost:90",
+    "paths": {
+        "/api/guild": {
+            "get": {
+                "description": "Retrieve the guild information.",
+                "tags": [
+                    "Guild"
+                ],
+                "summary": "Get Guild",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/disgm.Guild"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/api/guild/bans": {
+            "get": {
+                "description": "Retrieve all banned users from the guild.",
+                "tags": [
+                    "Bans"
+                ],
+                "summary": "Get Guild Bans",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.GuildBan"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/api/guild/bans/{userid}": {
+            "get": {
+                "description": "Retrieve a specific banned user by user ID.",
+                "tags": [
+                    "Bans"
+                ],
+                "summary": "Get Guild Ban",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "userid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.GuildBan"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            },
+            "put": {
+                "description": "Ban a user from the guild.",
+                "tags": [
+                    "Bans"
+                ],
+                "summary": "Add Guild Ban",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "userid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            },
+            "delete": {
+                "description": "Remove a ban for a user in the guild.",
+                "tags": [
+                    "Bans"
+                ],
+                "summary": "Remove Guild Ban",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "userid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/api/guild/bulk-ban": {
+            "post": {
+                "description": "Ban multiple users in the guild at once.",
+                "tags": [
+                    "Bans"
+                ],
+                "summary": "Bulk Ban Members",
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/api/guild/channels": {
+            "get": {
+                "description": "Retrieve all channels from the guild.",
+                "tags": [
+                    "Channels"
+                ],
+                "summary": "Get Guild Channels",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/definitions/models.Channel"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            },
+            "post": {
+                "description": "Create a new channel in the guild.",
+                "tags": [
+                    "Channels"
+                ],
+                "summary": "Create Guild Channel",
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/models.Channel"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/api/guild/channels/{channelid}": {
+            "get": {
+                "description": "Retrieve a specific channel from the guild by ID.",
+                "tags": [
+                    "Channels"
+                ],
+                "summary": "Get Guild Channel",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Channel ID",
+                        "name": "channelid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Channel"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete a specific channel in the guild.",
+                "tags": [
+                    "Channels"
+                ],
+                "summary": "Delete Guild Channel",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Channel ID",
+                        "name": "channelid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            },
+            "patch": {
+                "description": "Update a specific channel in the guild.",
+                "tags": [
+                    "Channels"
+                ],
+                "summary": "Update Guild Channel",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Channel ID",
+                        "name": "channelid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Channel"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/api/guild/channels/{channelid}/messages": {
+            "get": {
+                "description": "Retrieve all messages from a specific channel.",
+                "tags": [
+                    "Messages"
+                ],
+                "summary": "Get Channel Messages",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Channel ID",
+                        "name": "channelid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/disgm.Message"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            },
+            "post": {
+                "description": "Send a new message to a specific channel.",
+                "tags": [
+                    "Messages"
+                ],
+                "summary": "Send Channel Message",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Channel ID",
+                        "name": "channelid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/models.Message"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/api/guild/channels/{channelid}/messages/{messageid}": {
+            "get": {
+                "description": "Retrieve a specific message by ID from a channel.",
+                "tags": [
+                    "Messages"
+                ],
+                "summary": "Get Channel Message",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Channel ID",
+                        "name": "channelid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Message ID",
+                        "name": "messageid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Message"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete a specific message in a channel by ID.",
+                "tags": [
+                    "Messages"
+                ],
+                "summary": "Delete Channel Message",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Channel ID",
+                        "name": "channelid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Message ID",
+                        "name": "messageid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            },
+            "patch": {
+                "description": "Edit a specific message in a channel by ID.",
+                "tags": [
+                    "Messages"
+                ],
+                "summary": "Edit Channel Message",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Channel ID",
+                        "name": "channelid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Message ID",
+                        "name": "messageid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Message"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/api/guild/channels/{channelid}/messages/{messageid}/reactions": {
+            "delete": {
+                "description": "Remove all reactions from a specific message in a channel.",
+                "tags": [
+                    "Reactions"
+                ],
+                "summary": "Delete All Message Reactions",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Channel ID",
+                        "name": "channelid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Message ID",
+                        "name": "messageid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/api/guild/channels/{channelid}/messages/{messageid}/reactions/{emojiid}": {
+            "get": {
+                "description": "Retrieve all reactions from a specific message in a channel.",
+                "tags": [
+                    "Reactions"
+                ],
+                "summary": "Get Message Reactions",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Channel ID",
+                        "name": "channelid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Message ID",
+                        "name": "messageid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Emoji ID",
+                        "name": "emojiid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/definitions/models.User"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            },
+            "put": {
+                "description": "Add a reaction to a specific message in a channel.",
+                "tags": [
+                    "Reactions"
+                ],
+                "summary": "Create Message Reaction",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Channel ID",
+                        "name": "channelid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Message ID",
+                        "name": "messageid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Emoji ID",
+                        "name": "emojiid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            },
+            "delete": {
+                "description": "Remove a specific emoji reaction from a message in a channel.",
+                "tags": [
+                    "Reactions"
+                ],
+                "summary": "Delete Message Reaction Emoji",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Channel ID",
+                        "name": "channelid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Message ID",
+                        "name": "messageid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Emoji ID",
+                        "name": "emojiid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/api/guild/channels/{channelid}/messages/{messageid}/reactions/{emojiid}/{userid}": {
+            "delete": {
+                "description": "Delete a user's reaction from a specific message in a channel.",
+                "tags": [
+                    "Reactions"
+                ],
+                "summary": "Delete Message Reaction",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Channel ID",
+                        "name": "channelid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Message ID",
+                        "name": "messageid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Emoji ID",
+                        "name": "emojiid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "userid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/api/guild/channels/{channelid}/permissions/{overwriteid}": {
+            "put": {
+                "description": "Edit permissions for a specific channel in the guild.",
+                "tags": [
+                    "Channels"
+                ],
+                "summary": "Edit Channel Permissions",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Channel ID",
+                        "name": "channelid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Overwrite ID",
+                        "name": "overwriteid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete a specific permission overwrite for a channel.",
+                "tags": [
+                    "Channels"
+                ],
+                "summary": "Delete Channel Permissions",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Channel ID",
+                        "name": "channelid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Overwrite ID",
+                        "name": "overwriteid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/api/guild/commands": {
+            "get": {
+                "description": "Retrieve all guild application commands.",
+                "tags": [
+                    "Commands"
+                ],
+                "summary": "Get Guild Application Commands",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/definitions/models.ApplicationCommand"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            },
+            "post": {
+                "description": "Create a new guild application command.",
+                "tags": [
+                    "Commands"
+                ],
+                "summary": "Create Guild Application Command",
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/models.ApplicationCommand"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/api/guild/commands/{cmdid}": {
+            "get": {
+                "description": "Retrieve a specific guild application command by ID.",
+                "tags": [
+                    "Commands"
+                ],
+                "summary": "Get Guild Application Command",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Command ID",
+                        "name": "cmdid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.ApplicationCommand"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete a guild application command by ID.",
+                "tags": [
+                    "Commands"
+                ],
+                "summary": "Delete Guild Application Command",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Command ID",
+                        "name": "cmdid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/api/guild/interactions/{interactionid}/{interactiontoken}/callback": {
+            "post": {
+                "description": "Handle interaction callback for a specific interaction.",
+                "tags": [
+                    "Interactions"
+                ],
+                "summary": "Create Interaction Callback",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Interaction ID",
+                        "name": "interactionid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Interaction Token",
+                        "name": "interactiontoken",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/api/guild/members": {
+            "get": {
+                "description": "Retrieve all members of the guild.",
+                "tags": [
+                    "Members"
+                ],
+                "summary": "Get Guild Members",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/disgm.Member"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/api/guild/members/{memberid}": {
+            "get": {
+                "description": "Retrieve a specific member from the guild by ID.",
+                "tags": [
+                    "Members"
+                ],
+                "summary": "Get Guild Member",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Member ID",
+                        "name": "memberid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Member"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            },
+            "patch": {
+                "description": "Update a specific member in the guild.",
+                "tags": [
+                    "Members"
+                ],
+                "summary": "Update Guild Member",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Member ID",
+                        "name": "memberid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Member"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/api/guild/members/{memberid}/roles": {
+            "get": {
+                "description": "Retrieve all roles assigned to a specific member in the guild.",
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Get Member Roles",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Member ID",
+                        "name": "memberid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Role"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/api/guild/members/{memberid}/roles/{roleid}": {
+            "put": {
+                "description": "Add a role to a specific member in the guild.",
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Add Member Role",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Member ID",
+                        "name": "memberid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Role ID",
+                        "name": "roleid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            },
+            "delete": {
+                "description": "Remove a role from a specific member in the guild.",
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Remove Member Role",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Member ID",
+                        "name": "memberid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Role ID",
+                        "name": "roleid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/api/guild/roles": {
+            "get": {
+                "description": "Retrieve all roles of a specific guild using the guild ID.",
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Get all roles in a guild",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/disgm.Role"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            },
+            "post": {
+                "description": "Create a new role in a guild using the provided role parameters.",
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Create a new role in a guild",
+                "parameters": [
+                    {
+                        "description": "Role parameters",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.RoleParams"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/models.Role"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            },
+            "patch": {
+                "description": "Reorder the roles in a guild based on the provided positions.",
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Update role positions in a guild",
+                "parameters": [
+                    {
+                        "description": "New role positions",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Role"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Role"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/api/guild/roles/{roleid}": {
+            "get": {
+                "description": "Retrieve a specific role from a guild by its role ID.",
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Get a specific role in a guild",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ID of the role to retrieve",
+                        "name": "roleid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Role"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete a specific role from a guild using its role ID.",
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Delete a role from a guild",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ID of the role to delete",
+                        "name": "roleid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            },
+            "patch": {
+                "description": "Update a specific role in a guild using the provided role data.",
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Update a specific role in a guild",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ID of the role to update",
+                        "name": "roleid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Updated role parameters",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.RoleParams"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Role"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/api/user": {
+            "get": {
+                "description": "Retrieve the bot's user information.",
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get Bot User",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/disgm.User"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/guilds/{guildid}/members/{memberid}": {
+            "delete": {
+                "description": "Remove a member from the specified guild.",
+                "tags": [
+                    "Members"
+                ],
+                "summary": "Kick Member",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Member ID",
+                        "name": "memberid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/ws": {
+            "get": {
+                "description": "Sets up the WebSocket connection to handle Discord events and messages.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "WebSocket"
+                ],
+                "summary": "Register WebSocket",
+                "responses": {}
+            }
+        }
+    },
+    "definitions": {
+        "disgm.Guild": {
+            "type": "object",
+            "properties": {
+                "afk_channel_id": {
+                    "description": "Optional ID of AFK channel",
+                    "type": "string"
+                },
+                "afk_timeout": {
+                    "description": "AFK timeout in seconds",
+                    "type": "integer"
+                },
+                "application_id": {
+                    "description": "Optional application ID if bot-created",
+                    "type": "string"
+                },
+                "approximate_member_count": {
+                    "description": "Optional approximate number of members",
+                    "type": "integer"
+                },
+                "approximate_presence_count": {
+                    "description": "Optional approximate non-offline members",
+                    "type": "integer"
+                },
+                "banner": {
+                    "description": "Optional banner hash",
+                    "type": "string"
+                },
+                "default_message_notifications": {
+                    "description": "Default message notifications level",
+                    "type": "integer"
+                },
+                "description": {
+                    "description": "Optional description of the guild",
+                    "type": "string"
+                },
+                "discovery_splash": {
+                    "description": "Optional discovery splash hash for discoverable guilds",
+                    "type": "string"
+                },
+                "emojis": {
+                    "description": "Custom guild emojis",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Emoji"
+                    }
+                },
+                "explicit_content_filter": {
+                    "description": "Explicit content filter level",
+                    "type": "integer"
+                },
+                "features": {
+                    "description": "Enabled guild features",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "icon": {
+                    "description": "Optional icon hash",
+                    "type": "string"
+                },
+                "icon_hash": {
+                    "description": "Optional icon hash returned in the template object",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "Snowflake ID of the guild",
+                    "type": "string"
+                },
+                "max_members": {
+                    "description": "Maximum number of members for the guild",
+                    "type": "integer"
+                },
+                "max_presences": {
+                    "description": "Optional maximum presences for the guild",
+                    "type": "integer"
+                },
+                "max_stage_video_channel_users": {
+                    "description": "Maximum users in a stage video channel",
+                    "type": "integer"
+                },
+                "max_video_channel_users": {
+                    "description": "Maximum users in a video channel",
+                    "type": "integer"
+                },
+                "mfa_level": {
+                    "description": "Required MFA level for the guild",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "Name of the guild (2-100 characters)",
+                    "type": "string"
+                },
+                "nsfw_level": {
+                    "description": "NSFW level of the guild",
+                    "type": "integer"
+                },
+                "owner": {
+                    "description": "Optional flag indicating if the user is the owner of the guild",
+                    "type": "boolean"
+                },
+                "owner_id": {
+                    "description": "ID of the owner",
+                    "type": "string"
+                },
+                "permissions": {
+                    "description": "Optional total permissions for the user in the guild",
+                    "type": "string"
+                },
+                "preferred_locale": {
+                    "description": "Preferred locale of the community guild",
+                    "type": "string"
+                },
+                "premium_progress_bar_enabled": {
+                    "description": "Flag for boost progress bar enabled",
+                    "type": "boolean"
+                },
+                "premium_subscription_count": {
+                    "description": "Optional number of boosts",
+                    "type": "integer"
+                },
+                "premium_tier": {
+                    "description": "Premium tier (Server Boost level)",
+                    "type": "integer"
+                },
+                "public_updates_channel_id": {
+                    "description": "Optional public updates channel ID",
+                    "type": "string"
+                },
+                "region": {
+                    "description": "Optional voice region ID for the guild (deprecated)",
+                    "type": "string"
+                },
+                "roles": {
+                    "description": "Roles in the guild",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Role"
+                    }
+                },
+                "rules_channel_id": {
+                    "description": "Optional channel ID for community rules",
+                    "type": "string"
+                },
+                "safety_alerts_channel_id": {
+                    "description": "Optional channel ID for safety alerts",
+                    "type": "string"
+                },
+                "splash": {
+                    "description": "Optional splash hash",
+                    "type": "string"
+                },
+                "stickers": {
+                    "description": "Custom guild stickers",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Sticker"
+                    }
+                },
+                "system_channel_flags": {
+                    "description": "System channel flags",
+                    "type": "integer"
+                },
+                "system_channel_id": {
+                    "description": "Optional system channel ID for notices",
+                    "type": "string"
+                },
+                "vanity_url_code": {
+                    "description": "Optional vanity URL code for the guild",
+                    "type": "string"
+                },
+                "verification_level": {
+                    "description": "Verification level required for the guild",
+                    "type": "integer"
+                },
+                "welcome_screen": {
+                    "description": "Optional welcome screen object",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/models.WelcomeScreen"
+                        }
+                    ]
+                },
+                "widget_channel_id": {
+                    "description": "Optional channel ID for widget invite",
+                    "type": "string"
+                },
+                "widget_enabled": {
+                    "description": "Optional flag indicating if the server widget is enabled",
+                    "type": "boolean"
+                }
+            }
+        },
+        "disgm.Member": {
+            "type": "object",
+            "properties": {
+                "avatar": {
+                    "description": "The member's guild avatar hash",
+                    "type": "string"
+                },
+                "avatar_decoration_data": {
+                    "description": "Data for the member's guild avatar decoration",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/models.AvatarDecorationData"
+                        }
+                    ]
+                },
+                "communication_disabled_until": {
+                    "description": "When the user's timeout will expire",
+                    "type": "string"
+                },
+                "deaf": {
+                    "description": "Whether the user is deafened in voice channels",
+                    "type": "boolean"
+                },
+                "flags": {
+                    "description": "Guild member flags represented as a bit set, defaults to 0",
+                    "type": "integer"
+                },
+                "joined_at": {
+                    "description": "When the user joined the guild",
+                    "type": "string"
+                },
+                "mute": {
+                    "description": "Whether the user is muted in voice channels",
+                    "type": "boolean"
+                },
+                "nick": {
+                    "description": "This user's guild nickname",
+                    "type": "string"
+                },
+                "pending": {
+                    "description": "Whether the user has not yet passed the guild's Membership Screening requirements",
+                    "type": "boolean"
+                },
+                "permissions": {
+                    "description": "Total permissions of the member in the channel, including overwrites",
+                    "type": "string"
+                },
+                "premium_since": {
+                    "description": "When the user started boosting the guild",
+                    "type": "string"
+                },
+                "roles": {
+                    "description": "Array of role object IDs",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "user": {
+                    "description": "The user this guild member represents",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/models.User"
+                        }
+                    ]
+                }
+            }
+        },
+        "disgm.Message": {
+            "type": "object",
+            "properties": {
+                "activity": {
+                    "description": "Sent with Rich Presence-related chat embeds"
+                },
+                "application": {
+                    "description": "Sent with Rich Presence-related chat embeds"
+                },
+                "application_id": {
+                    "description": "ID of the application if the message is an Interaction or application-owned webhook",
+                    "type": "string"
+                },
+                "attachments": {
+                    "description": "Any attached files",
+                    "type": "array",
+                    "items": {}
+                },
+                "author": {
+                    "description": "The author of this message (not guaranteed to be a valid user)",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/models.User"
+                        }
+                    ]
+                },
+                "call": {
+                    "description": "The call associated with the message"
+                },
+                "channel_id": {
+                    "description": "ID of the channel the message was sent in",
+                    "type": "string"
+                },
+                "components": {
+                    "description": "Sent if the message contains components like buttons, action rows, etc.",
+                    "type": "array",
+                    "items": {}
+                },
+                "content": {
+                    "description": "Contents of the message",
+                    "type": "string"
+                },
+                "edited_timestamp": {
+                    "description": "When this message was edited (or null if never)",
+                    "type": "string"
+                },
+                "embeds": {
+                    "description": "Any embedded content",
+                    "type": "array",
+                    "items": {}
+                },
+                "flags": {
+                    "description": "Message flags combined as a bitfield",
+                    "type": "integer"
+                },
+                "id": {
+                    "description": "ID of the message",
+                    "type": "string"
+                },
+                "interaction": {
+                    "description": "Deprecated in favor of interaction_metadata"
+                },
+                "interaction_metadata": {
+                    "description": "Sent if the message is sent as a result of an interaction"
+                },
+                "mention_channels": {
+                    "description": "Channels specifically mentioned in this message",
+                    "type": "array",
+                    "items": {}
+                },
+                "mention_everyone": {
+                    "description": "Whether this message mentions everyone",
+                    "type": "boolean"
+                },
+                "mention_roles": {
+                    "description": "Roles specifically mentioned in this message",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "mentions": {
+                    "description": "Users specifically mentioned in the message",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.User"
+                    }
+                },
+                "message_reference": {
+                    "description": "Data showing the source of a crosspost, channel follow add, pin, or reply message"
+                },
+                "message_snapshots": {
+                    "description": "The message associated with the message_reference",
+                    "type": "array",
+                    "items": {}
+                },
+                "nonce": {
+                    "description": "Used for validating a message was sent"
+                },
+                "pinned": {
+                    "description": "Whether this message is pinned",
+                    "type": "boolean"
+                },
+                "poll": {
+                    "description": "A poll!"
+                },
+                "position": {
+                    "description": "Approximate position of the message in a thread",
+                    "type": "integer"
+                },
+                "reactions": {
+                    "description": "Reactions to the message",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Reaction"
+                    }
+                },
+                "referenced_message": {
+                    "description": "The message associated with the message_reference",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/models.Message"
+                        }
+                    ]
+                },
+                "resolved": {
+                    "description": "Data for users, members, channels, and roles in the message's auto-populated select menus"
+                },
+                "role_subscription_data": {
+                    "description": "Data of the role subscription purchase or renewal"
+                },
+                "sticker_items": {
+                    "description": "Sent if the message contains stickers",
+                    "type": "array",
+                    "items": {}
+                },
+                "stickers": {
+                    "description": "Deprecated the stickers sent with the message",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Sticker"
+                    }
+                },
+                "thread": {
+                    "description": "The thread that was started from this message",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/models.Channel"
+                        }
+                    ]
+                },
+                "timestamp": {
+                    "description": "When this message was sent",
+                    "type": "string"
+                },
+                "tts": {
+                    "description": "Whether this was a TTS message",
+                    "type": "boolean"
+                },
+                "type": {
+                    "description": "Type of message",
+                    "type": "integer"
+                },
+                "webhook_id": {
+                    "description": "If the message is generated by a webhook",
+                    "type": "string"
+                }
+            }
+        },
+        "disgm.Role": {
+            "type": "object",
+            "properties": {
+                "color": {
+                    "description": "Color of the role",
+                    "type": "integer"
+                },
+                "hoist": {
+                    "description": "Whether the role is hoisted in the user list",
+                    "type": "boolean"
+                },
+                "id": {
+                    "description": "Define fields for Role structure based on your needs",
+                    "type": "string"
+                },
+                "managed": {
+                    "description": "Whether the role is managed by an application",
+                    "type": "boolean"
+                },
+                "mentionable": {
+                    "description": "Whether the role is mentionable",
+                    "type": "boolean"
+                },
+                "name": {
+                    "description": "Name of the role",
+                    "type": "string"
+                },
+                "permissions": {
+                    "description": "Permissions for the role",
+                    "type": "string"
+                },
+                "position": {
+                    "description": "Position of the role",
+                    "type": "integer"
+                }
+            }
+        },
+        "disgm.User": {
+            "type": "object",
+            "properties": {
+                "accent_color": {
+                    "description": "Optional banner color as an integer",
+                    "type": "integer"
+                },
+                "avatar": {
+                    "description": "Optional avatar hash of the user",
+                    "type": "string"
+                },
+                "avatar_decoration_data": {
+                    "description": "Optional avatar decoration data",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/models.AvatarDecorationData"
+                        }
+                    ]
+                },
+                "banner": {
+                    "description": "Optional banner hash of the user",
+                    "type": "string"
+                },
+                "bot": {
+                    "description": "Optional flag indicating if the user is a bot",
+                    "type": "boolean"
+                },
+                "discriminator": {
+                    "description": "User's Discord tag (four-digit identifier)",
+                    "type": "string"
+                },
+                "email": {
+                    "description": "Optional user's email",
+                    "type": "string"
+                },
+                "flags": {
+                    "description": "Optional flags on the user's account",
+                    "type": "integer"
+                },
+                "global_name": {
+                    "description": "Optional display name (for bots, the application name)",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "Snowflake ID of the user",
+                    "type": "string"
+                },
+                "locale": {
+                    "description": "Optional user's chosen language",
+                    "type": "string"
+                },
+                "mfa_enabled": {
+                    "description": "Optional flag indicating if 2FA is enabled",
+                    "type": "boolean"
+                },
+                "premium_type": {
+                    "description": "Optional Nitro subscription type",
+                    "type": "integer"
+                },
+                "public_flags": {
+                    "description": "Optional public flags on the user's account",
+                    "type": "integer"
+                },
+                "system": {
+                    "description": "Optional flag indicating if the user is a system user",
+                    "type": "boolean"
+                },
+                "username": {
+                    "description": "Username of the user (not unique)",
+                    "type": "string"
+                },
+                "verified": {
+                    "description": "Optional flag indicating if the email is verified",
+                    "type": "boolean"
+                }
+            }
+        },
+        "models.ApplicationCommand": {
+            "type": "object",
+            "properties": {
+                "application_id": {
+                    "description": "ID of the parent application",
+                    "type": "string"
+                },
+                "contexts": {
+                    "description": "Interaction context(s) where the command can be used (global commands)",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "default_member_permissions": {
+                    "description": "Set of permissions represented as a bit set",
+                    "type": "string"
+                },
+                "default_permission": {
+                    "description": "Deprecated: Indicates if the command is enabled by default when the app is added to a guild",
+                    "type": "boolean"
+                },
+                "description": {
+                    "description": "Description for CHAT_INPUT commands, 1-100 characters. Empty for USER and MESSAGE commands",
+                    "type": "string"
+                },
+                "description_localizations": {
+                    "description": "Localization dictionary for description field",
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "dm_permission": {
+                    "description": "Deprecated: Indicates if the command is available in DMs for global commands",
+                    "type": "boolean"
+                },
+                "guild_id": {
+                    "description": "Guild ID of the command, if not global",
+                    "type": "string"
+                },
+                "handler": {
+                    "description": "Determines whether the interaction is handled by the app's handler or by Discord",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "Unique ID of the command",
+                    "type": "string"
+                },
+                "integration_types": {
+                    "description": "Installation contexts for the command (global commands)",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "name": {
+                    "description": "Name of the command, 1-32 characters",
+                    "type": "string"
+                },
+                "name_localizations": {
+                    "description": "Localization dictionary for name field",
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "nsfw": {
+                    "description": "Indicates whether the command is age-restricted, defaults to false",
+                    "type": "boolean"
+                },
+                "options": {
+                    "description": "Parameters for the command, max of 25 (CHAT_INPUT commands)",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.ApplicationCommandOption"
+                    }
+                },
+                "type": {
+                    "description": "Type of command, defaults to 1",
+                    "type": "integer"
+                },
+                "version": {
+                    "description": "Auto-incrementing version identifier updated during substantial record changes",
+                    "type": "string"
+                }
+            }
+        },
+        "models.ApplicationCommandOption": {
+            "type": "object",
+            "properties": {
+                "autocomplete": {
+                    "description": "Whether autocomplete is enabled for this option",
+                    "type": "boolean"
+                },
+                "channel_types": {
+                    "description": "Restrict shown channels to these types",
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "choices": {
+                    "description": "Optional array of choices for the user to pick from",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.ApplicationCommandOptionChoice"
+                    }
+                },
+                "description": {
+                    "description": "1-100 character description",
+                    "type": "string"
+                },
+                "description_localizations": {
+                    "description": "Optional localization dictionary for the description field",
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "max_length": {
+                    "description": "Maximum allowed length (min 1, max 6000)",
+                    "type": "integer"
+                },
+                "max_value": {
+                    "description": "Maximum value permitted (integer for INTEGER, double for NUMBER)",
+                    "type": "number"
+                },
+                "min_length": {
+                    "description": "Minimum allowed length (min 0, max 6000)",
+                    "type": "integer"
+                },
+                "min_value": {
+                    "description": "Minimum value permitted (integer for INTEGER, double for NUMBER)",
+                    "type": "number"
+                },
+                "name": {
+                    "description": "1-32 character name",
+                    "type": "string"
+                },
+                "name_localizations": {
+                    "description": "Optional localization dictionary for the name field",
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "options": {
+                    "description": "Nested options if the option is a subcommand or subcommand group",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.ApplicationCommandOption"
+                    }
+                },
+                "required": {
+                    "description": "Whether the option is required, default false",
+                    "type": "boolean"
+                },
+                "type": {
+                    "description": "Type of the option",
+                    "type": "integer"
+                }
+            }
+        },
+        "models.ApplicationCommandOptionChoice": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "description": "The name of the choice",
+                    "type": "string"
+                },
+                "value": {
+                    "description": "The value of the choice (can be string, integer, or number)"
+                }
+            }
+        },
+        "models.AvatarDecorationData": {
+            "type": "object",
+            "properties": {
+                "decoration": {
+                    "description": "Example field for decoration",
+                    "type": "string"
+                }
+            }
+        },
+        "models.Channel": {
+            "type": "object",
+            "properties": {
+                "application_id": {
+                    "description": "Optional application ID if bot-created group DM",
+                    "type": "string"
+                },
+                "applied_tags": {
+                    "description": "Optional IDs of the tags applied to a thread in a forum/media channel",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "available_tags": {
+                    "description": "Optional set of tags available in a forum/media channel",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Tag"
+                    }
+                },
+                "bitrate": {
+                    "description": "Optional bitrate (in bits) of the voice channel",
+                    "type": "integer"
+                },
+                "default_auto_archive_duration": {
+                    "description": "Optional default duration (in minutes) for auto-archiving threads",
+                    "type": "integer"
+                },
+                "default_forum_layout": {
+                    "description": "Optional default layout view for forum channels",
+                    "type": "integer"
+                },
+                "default_reaction_emoji": {
+                    "description": "Optional default reaction emoji for threads",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/models.DefaultReaction"
+                        }
+                    ]
+                },
+                "default_sort_order": {
+                    "description": "Optional default sort order for forum/media channels",
+                    "type": "integer"
+                },
+                "default_thread_rate_limit_per_user": {
+                    "description": "Optional initial rate limit per user for newly created threads",
+                    "type": "integer"
+                },
+                "flags": {
+                    "description": "Optional bitfield of channel flags",
+                    "type": "integer"
+                },
+                "guild_id": {
+                    "description": "Optional Guild ID if the channel is part of a guild",
+                    "type": "string"
+                },
+                "icon": {
+                    "description": "Optional icon hash for group DM",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "Snowflake ID of the channel",
+                    "type": "string"
+                },
+                "last_message_id": {
+                    "description": "Optional ID of the last message sent in the channel",
+                    "type": "string"
+                },
+                "last_pin_timestamp": {
+                    "description": "Optional timestamp of when the last pinned message was pinned",
+                    "type": "string"
+                },
+                "managed": {
+                    "description": "Optional flag indicating if the group DM is managed by an application",
+                    "type": "boolean"
+                },
+                "member": {
+                    "description": "Optional thread member object for the current user",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/models.ThreadMember"
+                        }
+                    ]
+                },
+                "member_count": {
+                    "description": "Optional count of users in a thread",
+                    "type": "integer"
+                },
+                "message_count": {
+                    "description": "Optional count of messages in a thread (excludes initial and deleted messages)",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "Optional name of the channel (1-100 characters)",
+                    "type": "string"
+                },
+                "nsfw": {
+                    "description": "Optional flag indicating if the channel is NSFW",
+                    "type": "boolean"
+                },
+                "owner_id": {
+                    "description": "Optional owner ID for group DM or thread",
+                    "type": "string"
+                },
+                "parent_id": {
+                    "description": "Optional ID of the parent category for guild channels",
+                    "type": "string"
+                },
+                "permission_overwrites": {
+                    "description": "Optional explicit permission overwrites for members and roles",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.PermissionOverwrite"
+                    }
+                },
+                "permissions": {
+                    "description": "Optional computed permissions for the invoking user in the channel",
+                    "type": "string"
+                },
+                "position": {
+                    "description": "Optional sorting position of the channel",
+                    "type": "integer"
+                },
+                "rate_limit_per_user": {
+                    "description": "Optional rate limit per user (in seconds)",
+                    "type": "integer"
+                },
+                "recipients": {
+                    "description": "Optional list of recipients in a DM",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.User"
+                    }
+                },
+                "rtc_region": {
+                    "description": "Optional voice region ID for the voice channel",
+                    "type": "string"
+                },
+                "thread_metadata": {
+                    "description": "Optional thread-specific fields",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/models.ThreadMetadata"
+                        }
+                    ]
+                },
+                "topic": {
+                    "description": "Optional topic of the channel (up to 4096 characters for forum/media channels, 1024 for others)",
+                    "type": "string"
+                },
+                "total_message_sent": {
+                    "description": "Optional total number of messages ever sent in a thread",
+                    "type": "integer"
+                },
+                "type": {
+                    "description": "Type of the channel",
+                    "type": "integer"
+                },
+                "user_limit": {
+                    "description": "Optional user limit of the voice channel",
+                    "type": "integer"
+                },
+                "video_quality_mode": {
+                    "description": "Optional video quality mode for the voice channel",
+                    "type": "integer"
+                }
+            }
+        },
+        "models.CountDetails": {
+            "type": "object"
+        },
+        "models.DefaultReaction": {
+            "type": "object",
+            "properties": {
+                "emoji_id": {
+                    "description": "Snowflake ID of the emoji",
+                    "type": "string"
+                },
+                "emoji_name": {
+                    "description": "Name of the emoji",
+                    "type": "string"
+                }
+            }
+        },
+        "models.Emoji": {
+            "type": "object",
+            "properties": {
+                "animated": {
+                    "description": "Whether the emoji is animated",
+                    "type": "boolean"
+                },
+                "id": {
+                    "description": "Define fields for Emoji structure based on your needs",
+                    "type": "string"
+                },
+                "managed": {
+                    "description": "Whether the emoji is managed by an application",
+                    "type": "boolean"
+                },
+                "name": {
+                    "description": "Name of the emoji",
+                    "type": "string"
+                },
+                "requires_colons": {
+                    "description": "Whether the emoji requires colons",
+                    "type": "boolean"
+                },
+                "roles": {
+                    "description": "Roles allowed to use the emoji",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Role"
+                    }
+                },
+                "user": {
+                    "description": "Optional user object that created the emoji",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/models.User"
+                        }
+                    ]
+                }
+            }
+        },
+        "models.GuildBan": {
+            "type": "object",
+            "properties": {
+                "reason": {
+                    "type": "string"
+                },
+                "user": {
+                    "$ref": "#/definitions/models.User"
+                }
+            }
+        },
+        "models.Member": {
+            "type": "object",
+            "properties": {
+                "avatar": {
+                    "description": "The member's guild avatar hash",
+                    "type": "string"
+                },
+                "avatar_decoration_data": {
+                    "description": "Data for the member's guild avatar decoration",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/models.AvatarDecorationData"
+                        }
+                    ]
+                },
+                "communication_disabled_until": {
+                    "description": "When the user's timeout will expire",
+                    "type": "string"
+                },
+                "deaf": {
+                    "description": "Whether the user is deafened in voice channels",
+                    "type": "boolean"
+                },
+                "flags": {
+                    "description": "Guild member flags represented as a bit set, defaults to 0",
+                    "type": "integer"
+                },
+                "joined_at": {
+                    "description": "When the user joined the guild",
+                    "type": "string"
+                },
+                "mute": {
+                    "description": "Whether the user is muted in voice channels",
+                    "type": "boolean"
+                },
+                "nick": {
+                    "description": "This user's guild nickname",
+                    "type": "string"
+                },
+                "pending": {
+                    "description": "Whether the user has not yet passed the guild's Membership Screening requirements",
+                    "type": "boolean"
+                },
+                "permissions": {
+                    "description": "Total permissions of the member in the channel, including overwrites",
+                    "type": "string"
+                },
+                "premium_since": {
+                    "description": "When the user started boosting the guild",
+                    "type": "string"
+                },
+                "roles": {
+                    "description": "Array of role object IDs",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "user": {
+                    "description": "The user this guild member represents",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/models.User"
+                        }
+                    ]
+                }
+            }
+        },
+        "models.Message": {
+            "type": "object",
+            "properties": {
+                "activity": {
+                    "description": "Sent with Rich Presence-related chat embeds"
+                },
+                "application": {
+                    "description": "Sent with Rich Presence-related chat embeds"
+                },
+                "application_id": {
+                    "description": "ID of the application if the message is an Interaction or application-owned webhook",
+                    "type": "string"
+                },
+                "attachments": {
+                    "description": "Any attached files",
+                    "type": "array",
+                    "items": {}
+                },
+                "author": {
+                    "description": "The author of this message (not guaranteed to be a valid user)",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/models.User"
+                        }
+                    ]
+                },
+                "call": {
+                    "description": "The call associated with the message"
+                },
+                "channel_id": {
+                    "description": "ID of the channel the message was sent in",
+                    "type": "string"
+                },
+                "components": {
+                    "description": "Sent if the message contains components like buttons, action rows, etc.",
+                    "type": "array",
+                    "items": {}
+                },
+                "content": {
+                    "description": "Contents of the message",
+                    "type": "string"
+                },
+                "edited_timestamp": {
+                    "description": "When this message was edited (or null if never)",
+                    "type": "string"
+                },
+                "embeds": {
+                    "description": "Any embedded content",
+                    "type": "array",
+                    "items": {}
+                },
+                "flags": {
+                    "description": "Message flags combined as a bitfield",
+                    "type": "integer"
+                },
+                "id": {
+                    "description": "ID of the message",
+                    "type": "string"
+                },
+                "interaction": {
+                    "description": "Deprecated in favor of interaction_metadata"
+                },
+                "interaction_metadata": {
+                    "description": "Sent if the message is sent as a result of an interaction"
+                },
+                "mention_channels": {
+                    "description": "Channels specifically mentioned in this message",
+                    "type": "array",
+                    "items": {}
+                },
+                "mention_everyone": {
+                    "description": "Whether this message mentions everyone",
+                    "type": "boolean"
+                },
+                "mention_roles": {
+                    "description": "Roles specifically mentioned in this message",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "mentions": {
+                    "description": "Users specifically mentioned in the message",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.User"
+                    }
+                },
+                "message_reference": {
+                    "description": "Data showing the source of a crosspost, channel follow add, pin, or reply message"
+                },
+                "message_snapshots": {
+                    "description": "The message associated with the message_reference",
+                    "type": "array",
+                    "items": {}
+                },
+                "nonce": {
+                    "description": "Used for validating a message was sent"
+                },
+                "pinned": {
+                    "description": "Whether this message is pinned",
+                    "type": "boolean"
+                },
+                "poll": {
+                    "description": "A poll!"
+                },
+                "position": {
+                    "description": "Approximate position of the message in a thread",
+                    "type": "integer"
+                },
+                "reactions": {
+                    "description": "Reactions to the message",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Reaction"
+                    }
+                },
+                "referenced_message": {
+                    "description": "The message associated with the message_reference",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/models.Message"
+                        }
+                    ]
+                },
+                "resolved": {
+                    "description": "Data for users, members, channels, and roles in the message's auto-populated select menus"
+                },
+                "role_subscription_data": {
+                    "description": "Data of the role subscription purchase or renewal"
+                },
+                "sticker_items": {
+                    "description": "Sent if the message contains stickers",
+                    "type": "array",
+                    "items": {}
+                },
+                "stickers": {
+                    "description": "Deprecated the stickers sent with the message",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Sticker"
+                    }
+                },
+                "thread": {
+                    "description": "The thread that was started from this message",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/models.Channel"
+                        }
+                    ]
+                },
+                "timestamp": {
+                    "description": "When this message was sent",
+                    "type": "string"
+                },
+                "tts": {
+                    "description": "Whether this was a TTS message",
+                    "type": "boolean"
+                },
+                "type": {
+                    "description": "Type of message",
+                    "type": "integer"
+                },
+                "webhook_id": {
+                    "description": "If the message is generated by a webhook",
+                    "type": "string"
+                }
+            }
+        },
+        "models.PartialEmoji": {
+            "type": "object",
+            "properties": {
+                "animated": {
+                    "description": "Whether the emoji is animated",
+                    "type": "boolean"
+                },
+                "id": {
+                    "description": "ID of the emoji (if it's a custom emoji)",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "Name of the emoji",
+                    "type": "string"
+                }
+            }
+        },
+        "models.PermissionOverwrite": {
+            "type": "object",
+            "properties": {
+                "allow": {
+                    "description": "Allowed permissions bit set",
+                    "type": "string"
+                },
+                "deny": {
+                    "description": "Denied permissions bit set",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "Snowflake ID of the overwrite (role or user)",
+                    "type": "string"
+                },
+                "type": {
+                    "description": "Type of overwrite (0 = role, 1 = member)",
+                    "type": "integer"
+                }
+            }
+        },
+        "models.Reaction": {
+            "type": "object",
+            "properties": {
+                "burst_colors": {
+                    "description": "HEX colors used for super reaction",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "count": {
+                    "description": "Total number of times this emoji has been used to react (including super reacts)",
+                    "type": "integer"
+                },
+                "count_details": {
+                    "description": "Reaction count details object",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/models.CountDetails"
+                        }
+                    ]
+                },
+                "emoji": {
+                    "description": "Emoji information",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/models.PartialEmoji"
+                        }
+                    ]
+                },
+                "me": {
+                    "description": "Whether the current user reacted using this emoji",
+                    "type": "boolean"
+                },
+                "me_burst": {
+                    "description": "Whether the current user super-reacted using this emoji",
+                    "type": "boolean"
+                }
+            }
+        },
+        "models.Role": {
+            "type": "object",
+            "properties": {
+                "color": {
+                    "description": "Color of the role",
+                    "type": "integer"
+                },
+                "hoist": {
+                    "description": "Whether the role is hoisted in the user list",
+                    "type": "boolean"
+                },
+                "id": {
+                    "description": "Define fields for Role structure based on your needs",
+                    "type": "string"
+                },
+                "managed": {
+                    "description": "Whether the role is managed by an application",
+                    "type": "boolean"
+                },
+                "mentionable": {
+                    "description": "Whether the role is mentionable",
+                    "type": "boolean"
+                },
+                "name": {
+                    "description": "Name of the role",
+                    "type": "string"
+                },
+                "permissions": {
+                    "description": "Permissions for the role",
+                    "type": "string"
+                },
+                "position": {
+                    "description": "Position of the role",
+                    "type": "integer"
+                }
+            }
+        },
+        "models.RoleParams": {
+            "type": "object",
+            "properties": {
+                "color": {
+                    "description": "RGB color value",
+                    "type": "integer"
+                },
+                "hoist": {
+                    "description": "Whether the role should be displayed separately in the sidebar",
+                    "type": "boolean"
+                },
+                "icon": {
+                    "description": "The role's icon image (if the guild has the ROLE_ICONS feature)",
+                    "type": "string"
+                },
+                "mentionable": {
+                    "description": "Whether the role should be mentionable",
+                    "type": "boolean"
+                },
+                "name": {
+                    "description": "Name of the role, max 100 characters",
+                    "type": "string"
+                },
+                "permissions": {
+                    "description": "Bitwise value of the enabled/disabled permissions",
+                    "type": "string"
+                },
+                "unicode_emoji": {
+                    "description": "The role's unicode emoji as a standard emoji (if the guild has the ROLE_ICONS feature)",
+                    "type": "string"
+                }
+            }
+        },
+        "models.Sticker": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "description": "Optional description of the sticker",
+                    "type": "string"
+                },
+                "format_type": {
+                    "description": "Format type of the sticker",
+                    "type": "integer"
+                },
+                "id": {
+                    "description": "Define fields for Sticker structure based on your needs",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "Name of the sticker",
+                    "type": "string"
+                },
+                "pack_id": {
+                    "description": "ID of the sticker pack",
+                    "type": "string"
+                }
+            }
+        },
+        "models.Tag": {
+            "type": "object",
+            "properties": {
+                "emoji": {
+                    "description": "Optional emoji associated with the tag",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "Snowflake ID of the tag",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "Name of the tag",
+                    "type": "string"
+                }
+            }
+        },
+        "models.ThreadMember": {
+            "type": "object",
+            "properties": {
+                "flags": {
+                    "description": "Thread member flags",
+                    "type": "integer"
+                },
+                "id": {
+                    "description": "Snowflake ID of the thread member",
+                    "type": "string"
+                },
+                "join_timestamp": {
+                    "description": "ISO8601 timestamp when the member joined",
+                    "type": "string"
+                },
+                "user_id": {
+                    "description": "Snowflake ID of the user",
+                    "type": "string"
+                }
+            }
+        },
+        "models.ThreadMetadata": {
+            "type": "object",
+            "properties": {
+                "archive_timestamp": {
+                    "description": "ISO8601 timestamp when the thread was archived",
+                    "type": "string"
+                },
+                "archived": {
+                    "description": "Whether the thread is archived",
+                    "type": "boolean"
+                },
+                "auto_archive_duration": {
+                    "description": "Duration in minutes to auto-archive",
+                    "type": "integer"
+                },
+                "locked": {
+                    "description": "Whether the thread is locked",
+                    "type": "boolean"
+                }
+            }
+        },
+        "models.User": {
+            "type": "object",
+            "properties": {
+                "accent_color": {
+                    "description": "Optional banner color as an integer",
+                    "type": "integer"
+                },
+                "avatar": {
+                    "description": "Optional avatar hash of the user",
+                    "type": "string"
+                },
+                "avatar_decoration_data": {
+                    "description": "Optional avatar decoration data",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/models.AvatarDecorationData"
+                        }
+                    ]
+                },
+                "banner": {
+                    "description": "Optional banner hash of the user",
+                    "type": "string"
+                },
+                "bot": {
+                    "description": "Optional flag indicating if the user is a bot",
+                    "type": "boolean"
+                },
+                "discriminator": {
+                    "description": "User's Discord tag (four-digit identifier)",
+                    "type": "string"
+                },
+                "email": {
+                    "description": "Optional user's email",
+                    "type": "string"
+                },
+                "flags": {
+                    "description": "Optional flags on the user's account",
+                    "type": "integer"
+                },
+                "global_name": {
+                    "description": "Optional display name (for bots, the application name)",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "Snowflake ID of the user",
+                    "type": "string"
+                },
+                "locale": {
+                    "description": "Optional user's chosen language",
+                    "type": "string"
+                },
+                "mfa_enabled": {
+                    "description": "Optional flag indicating if 2FA is enabled",
+                    "type": "boolean"
+                },
+                "premium_type": {
+                    "description": "Optional Nitro subscription type",
+                    "type": "integer"
+                },
+                "public_flags": {
+                    "description": "Optional public flags on the user's account",
+                    "type": "integer"
+                },
+                "system": {
+                    "description": "Optional flag indicating if the user is a system user",
+                    "type": "boolean"
+                },
+                "username": {
+                    "description": "Username of the user (not unique)",
+                    "type": "string"
+                },
+                "verified": {
+                    "description": "Optional flag indicating if the email is verified",
+                    "type": "boolean"
+                }
+            }
+        },
+        "models.WelcomeChannel": {
+            "type": "object",
+            "properties": {
+                "channel_id": {
+                    "description": "ID of the channel",
+                    "type": "string"
+                },
+                "description": {
+                    "description": "Optional description for the channel",
+                    "type": "string"
+                },
+                "emoji": {
+                    "description": "Optional emoji for the channel",
+                    "type": "string"
+                }
+            }
+        },
+        "models.WelcomeScreen": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "description": "Define fields relevant to the welcome screen as needed",
+                    "type": "string"
+                },
+                "welcome_channels": {
+                    "description": "Channels to show on the welcome screen",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.WelcomeChannel"
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,1980 @@
+definitions:
+  disgm.Guild:
+    properties:
+      afk_channel_id:
+        description: Optional ID of AFK channel
+        type: string
+      afk_timeout:
+        description: AFK timeout in seconds
+        type: integer
+      application_id:
+        description: Optional application ID if bot-created
+        type: string
+      approximate_member_count:
+        description: Optional approximate number of members
+        type: integer
+      approximate_presence_count:
+        description: Optional approximate non-offline members
+        type: integer
+      banner:
+        description: Optional banner hash
+        type: string
+      default_message_notifications:
+        description: Default message notifications level
+        type: integer
+      description:
+        description: Optional description of the guild
+        type: string
+      discovery_splash:
+        description: Optional discovery splash hash for discoverable guilds
+        type: string
+      emojis:
+        description: Custom guild emojis
+        items:
+          $ref: '#/definitions/models.Emoji'
+        type: array
+      explicit_content_filter:
+        description: Explicit content filter level
+        type: integer
+      features:
+        description: Enabled guild features
+        items:
+          type: string
+        type: array
+      icon:
+        description: Optional icon hash
+        type: string
+      icon_hash:
+        description: Optional icon hash returned in the template object
+        type: string
+      id:
+        description: Snowflake ID of the guild
+        type: string
+      max_members:
+        description: Maximum number of members for the guild
+        type: integer
+      max_presences:
+        description: Optional maximum presences for the guild
+        type: integer
+      max_stage_video_channel_users:
+        description: Maximum users in a stage video channel
+        type: integer
+      max_video_channel_users:
+        description: Maximum users in a video channel
+        type: integer
+      mfa_level:
+        description: Required MFA level for the guild
+        type: integer
+      name:
+        description: Name of the guild (2-100 characters)
+        type: string
+      nsfw_level:
+        description: NSFW level of the guild
+        type: integer
+      owner:
+        description: Optional flag indicating if the user is the owner of the guild
+        type: boolean
+      owner_id:
+        description: ID of the owner
+        type: string
+      permissions:
+        description: Optional total permissions for the user in the guild
+        type: string
+      preferred_locale:
+        description: Preferred locale of the community guild
+        type: string
+      premium_progress_bar_enabled:
+        description: Flag for boost progress bar enabled
+        type: boolean
+      premium_subscription_count:
+        description: Optional number of boosts
+        type: integer
+      premium_tier:
+        description: Premium tier (Server Boost level)
+        type: integer
+      public_updates_channel_id:
+        description: Optional public updates channel ID
+        type: string
+      region:
+        description: Optional voice region ID for the guild (deprecated)
+        type: string
+      roles:
+        description: Roles in the guild
+        items:
+          $ref: '#/definitions/models.Role'
+        type: array
+      rules_channel_id:
+        description: Optional channel ID for community rules
+        type: string
+      safety_alerts_channel_id:
+        description: Optional channel ID for safety alerts
+        type: string
+      splash:
+        description: Optional splash hash
+        type: string
+      stickers:
+        description: Custom guild stickers
+        items:
+          $ref: '#/definitions/models.Sticker'
+        type: array
+      system_channel_flags:
+        description: System channel flags
+        type: integer
+      system_channel_id:
+        description: Optional system channel ID for notices
+        type: string
+      vanity_url_code:
+        description: Optional vanity URL code for the guild
+        type: string
+      verification_level:
+        description: Verification level required for the guild
+        type: integer
+      welcome_screen:
+        allOf:
+        - $ref: '#/definitions/models.WelcomeScreen'
+        description: Optional welcome screen object
+      widget_channel_id:
+        description: Optional channel ID for widget invite
+        type: string
+      widget_enabled:
+        description: Optional flag indicating if the server widget is enabled
+        type: boolean
+    type: object
+  disgm.Member:
+    properties:
+      avatar:
+        description: The member's guild avatar hash
+        type: string
+      avatar_decoration_data:
+        allOf:
+        - $ref: '#/definitions/models.AvatarDecorationData'
+        description: Data for the member's guild avatar decoration
+      communication_disabled_until:
+        description: When the user's timeout will expire
+        type: string
+      deaf:
+        description: Whether the user is deafened in voice channels
+        type: boolean
+      flags:
+        description: Guild member flags represented as a bit set, defaults to 0
+        type: integer
+      joined_at:
+        description: When the user joined the guild
+        type: string
+      mute:
+        description: Whether the user is muted in voice channels
+        type: boolean
+      nick:
+        description: This user's guild nickname
+        type: string
+      pending:
+        description: Whether the user has not yet passed the guild's Membership Screening
+          requirements
+        type: boolean
+      permissions:
+        description: Total permissions of the member in the channel, including overwrites
+        type: string
+      premium_since:
+        description: When the user started boosting the guild
+        type: string
+      roles:
+        description: Array of role object IDs
+        items:
+          type: string
+        type: array
+      user:
+        allOf:
+        - $ref: '#/definitions/models.User'
+        description: The user this guild member represents
+    type: object
+  disgm.Message:
+    properties:
+      activity:
+        description: Sent with Rich Presence-related chat embeds
+      application:
+        description: Sent with Rich Presence-related chat embeds
+      application_id:
+        description: ID of the application if the message is an Interaction or application-owned
+          webhook
+        type: string
+      attachments:
+        description: Any attached files
+        items: {}
+        type: array
+      author:
+        allOf:
+        - $ref: '#/definitions/models.User'
+        description: The author of this message (not guaranteed to be a valid user)
+      call:
+        description: The call associated with the message
+      channel_id:
+        description: ID of the channel the message was sent in
+        type: string
+      components:
+        description: Sent if the message contains components like buttons, action
+          rows, etc.
+        items: {}
+        type: array
+      content:
+        description: Contents of the message
+        type: string
+      edited_timestamp:
+        description: When this message was edited (or null if never)
+        type: string
+      embeds:
+        description: Any embedded content
+        items: {}
+        type: array
+      flags:
+        description: Message flags combined as a bitfield
+        type: integer
+      id:
+        description: ID of the message
+        type: string
+      interaction:
+        description: Deprecated in favor of interaction_metadata
+      interaction_metadata:
+        description: Sent if the message is sent as a result of an interaction
+      mention_channels:
+        description: Channels specifically mentioned in this message
+        items: {}
+        type: array
+      mention_everyone:
+        description: Whether this message mentions everyone
+        type: boolean
+      mention_roles:
+        description: Roles specifically mentioned in this message
+        items:
+          type: string
+        type: array
+      mentions:
+        description: Users specifically mentioned in the message
+        items:
+          $ref: '#/definitions/models.User'
+        type: array
+      message_reference:
+        description: Data showing the source of a crosspost, channel follow add, pin,
+          or reply message
+      message_snapshots:
+        description: The message associated with the message_reference
+        items: {}
+        type: array
+      nonce:
+        description: Used for validating a message was sent
+      pinned:
+        description: Whether this message is pinned
+        type: boolean
+      poll:
+        description: A poll!
+      position:
+        description: Approximate position of the message in a thread
+        type: integer
+      reactions:
+        description: Reactions to the message
+        items:
+          $ref: '#/definitions/models.Reaction'
+        type: array
+      referenced_message:
+        allOf:
+        - $ref: '#/definitions/models.Message'
+        description: The message associated with the message_reference
+      resolved:
+        description: Data for users, members, channels, and roles in the message's
+          auto-populated select menus
+      role_subscription_data:
+        description: Data of the role subscription purchase or renewal
+      sticker_items:
+        description: Sent if the message contains stickers
+        items: {}
+        type: array
+      stickers:
+        description: Deprecated the stickers sent with the message
+        items:
+          $ref: '#/definitions/models.Sticker'
+        type: array
+      thread:
+        allOf:
+        - $ref: '#/definitions/models.Channel'
+        description: The thread that was started from this message
+      timestamp:
+        description: When this message was sent
+        type: string
+      tts:
+        description: Whether this was a TTS message
+        type: boolean
+      type:
+        description: Type of message
+        type: integer
+      webhook_id:
+        description: If the message is generated by a webhook
+        type: string
+    type: object
+  disgm.Role:
+    properties:
+      color:
+        description: Color of the role
+        type: integer
+      hoist:
+        description: Whether the role is hoisted in the user list
+        type: boolean
+      id:
+        description: Define fields for Role structure based on your needs
+        type: string
+      managed:
+        description: Whether the role is managed by an application
+        type: boolean
+      mentionable:
+        description: Whether the role is mentionable
+        type: boolean
+      name:
+        description: Name of the role
+        type: string
+      permissions:
+        description: Permissions for the role
+        type: string
+      position:
+        description: Position of the role
+        type: integer
+    type: object
+  disgm.User:
+    properties:
+      accent_color:
+        description: Optional banner color as an integer
+        type: integer
+      avatar:
+        description: Optional avatar hash of the user
+        type: string
+      avatar_decoration_data:
+        allOf:
+        - $ref: '#/definitions/models.AvatarDecorationData'
+        description: Optional avatar decoration data
+      banner:
+        description: Optional banner hash of the user
+        type: string
+      bot:
+        description: Optional flag indicating if the user is a bot
+        type: boolean
+      discriminator:
+        description: User's Discord tag (four-digit identifier)
+        type: string
+      email:
+        description: Optional user's email
+        type: string
+      flags:
+        description: Optional flags on the user's account
+        type: integer
+      global_name:
+        description: Optional display name (for bots, the application name)
+        type: string
+      id:
+        description: Snowflake ID of the user
+        type: string
+      locale:
+        description: Optional user's chosen language
+        type: string
+      mfa_enabled:
+        description: Optional flag indicating if 2FA is enabled
+        type: boolean
+      premium_type:
+        description: Optional Nitro subscription type
+        type: integer
+      public_flags:
+        description: Optional public flags on the user's account
+        type: integer
+      system:
+        description: Optional flag indicating if the user is a system user
+        type: boolean
+      username:
+        description: Username of the user (not unique)
+        type: string
+      verified:
+        description: Optional flag indicating if the email is verified
+        type: boolean
+    type: object
+  models.ApplicationCommand:
+    properties:
+      application_id:
+        description: ID of the parent application
+        type: string
+      contexts:
+        description: Interaction context(s) where the command can be used (global
+          commands)
+        items:
+          type: string
+        type: array
+      default_member_permissions:
+        description: Set of permissions represented as a bit set
+        type: string
+      default_permission:
+        description: 'Deprecated: Indicates if the command is enabled by default when
+          the app is added to a guild'
+        type: boolean
+      description:
+        description: Description for CHAT_INPUT commands, 1-100 characters. Empty
+          for USER and MESSAGE commands
+        type: string
+      description_localizations:
+        additionalProperties:
+          type: string
+        description: Localization dictionary for description field
+        type: object
+      dm_permission:
+        description: 'Deprecated: Indicates if the command is available in DMs for
+          global commands'
+        type: boolean
+      guild_id:
+        description: Guild ID of the command, if not global
+        type: string
+      handler:
+        description: Determines whether the interaction is handled by the app's handler
+          or by Discord
+        type: string
+      id:
+        description: Unique ID of the command
+        type: string
+      integration_types:
+        description: Installation contexts for the command (global commands)
+        items:
+          type: string
+        type: array
+      name:
+        description: Name of the command, 1-32 characters
+        type: string
+      name_localizations:
+        additionalProperties:
+          type: string
+        description: Localization dictionary for name field
+        type: object
+      nsfw:
+        description: Indicates whether the command is age-restricted, defaults to
+          false
+        type: boolean
+      options:
+        description: Parameters for the command, max of 25 (CHAT_INPUT commands)
+        items:
+          $ref: '#/definitions/models.ApplicationCommandOption'
+        type: array
+      type:
+        description: Type of command, defaults to 1
+        type: integer
+      version:
+        description: Auto-incrementing version identifier updated during substantial
+          record changes
+        type: string
+    type: object
+  models.ApplicationCommandOption:
+    properties:
+      autocomplete:
+        description: Whether autocomplete is enabled for this option
+        type: boolean
+      channel_types:
+        description: Restrict shown channels to these types
+        items:
+          type: integer
+        type: array
+      choices:
+        description: Optional array of choices for the user to pick from
+        items:
+          $ref: '#/definitions/models.ApplicationCommandOptionChoice'
+        type: array
+      description:
+        description: 1-100 character description
+        type: string
+      description_localizations:
+        additionalProperties:
+          type: string
+        description: Optional localization dictionary for the description field
+        type: object
+      max_length:
+        description: Maximum allowed length (min 1, max 6000)
+        type: integer
+      max_value:
+        description: Maximum value permitted (integer for INTEGER, double for NUMBER)
+        type: number
+      min_length:
+        description: Minimum allowed length (min 0, max 6000)
+        type: integer
+      min_value:
+        description: Minimum value permitted (integer for INTEGER, double for NUMBER)
+        type: number
+      name:
+        description: 1-32 character name
+        type: string
+      name_localizations:
+        additionalProperties:
+          type: string
+        description: Optional localization dictionary for the name field
+        type: object
+      options:
+        description: Nested options if the option is a subcommand or subcommand group
+        items:
+          $ref: '#/definitions/models.ApplicationCommandOption'
+        type: array
+      required:
+        description: Whether the option is required, default false
+        type: boolean
+      type:
+        description: Type of the option
+        type: integer
+    type: object
+  models.ApplicationCommandOptionChoice:
+    properties:
+      name:
+        description: The name of the choice
+        type: string
+      value:
+        description: The value of the choice (can be string, integer, or number)
+    type: object
+  models.AvatarDecorationData:
+    properties:
+      decoration:
+        description: Example field for decoration
+        type: string
+    type: object
+  models.Channel:
+    properties:
+      application_id:
+        description: Optional application ID if bot-created group DM
+        type: string
+      applied_tags:
+        description: Optional IDs of the tags applied to a thread in a forum/media
+          channel
+        items:
+          type: string
+        type: array
+      available_tags:
+        description: Optional set of tags available in a forum/media channel
+        items:
+          $ref: '#/definitions/models.Tag'
+        type: array
+      bitrate:
+        description: Optional bitrate (in bits) of the voice channel
+        type: integer
+      default_auto_archive_duration:
+        description: Optional default duration (in minutes) for auto-archiving threads
+        type: integer
+      default_forum_layout:
+        description: Optional default layout view for forum channels
+        type: integer
+      default_reaction_emoji:
+        allOf:
+        - $ref: '#/definitions/models.DefaultReaction'
+        description: Optional default reaction emoji for threads
+      default_sort_order:
+        description: Optional default sort order for forum/media channels
+        type: integer
+      default_thread_rate_limit_per_user:
+        description: Optional initial rate limit per user for newly created threads
+        type: integer
+      flags:
+        description: Optional bitfield of channel flags
+        type: integer
+      guild_id:
+        description: Optional Guild ID if the channel is part of a guild
+        type: string
+      icon:
+        description: Optional icon hash for group DM
+        type: string
+      id:
+        description: Snowflake ID of the channel
+        type: string
+      last_message_id:
+        description: Optional ID of the last message sent in the channel
+        type: string
+      last_pin_timestamp:
+        description: Optional timestamp of when the last pinned message was pinned
+        type: string
+      managed:
+        description: Optional flag indicating if the group DM is managed by an application
+        type: boolean
+      member:
+        allOf:
+        - $ref: '#/definitions/models.ThreadMember'
+        description: Optional thread member object for the current user
+      member_count:
+        description: Optional count of users in a thread
+        type: integer
+      message_count:
+        description: Optional count of messages in a thread (excludes initial and
+          deleted messages)
+        type: integer
+      name:
+        description: Optional name of the channel (1-100 characters)
+        type: string
+      nsfw:
+        description: Optional flag indicating if the channel is NSFW
+        type: boolean
+      owner_id:
+        description: Optional owner ID for group DM or thread
+        type: string
+      parent_id:
+        description: Optional ID of the parent category for guild channels
+        type: string
+      permission_overwrites:
+        description: Optional explicit permission overwrites for members and roles
+        items:
+          $ref: '#/definitions/models.PermissionOverwrite'
+        type: array
+      permissions:
+        description: Optional computed permissions for the invoking user in the channel
+        type: string
+      position:
+        description: Optional sorting position of the channel
+        type: integer
+      rate_limit_per_user:
+        description: Optional rate limit per user (in seconds)
+        type: integer
+      recipients:
+        description: Optional list of recipients in a DM
+        items:
+          $ref: '#/definitions/models.User'
+        type: array
+      rtc_region:
+        description: Optional voice region ID for the voice channel
+        type: string
+      thread_metadata:
+        allOf:
+        - $ref: '#/definitions/models.ThreadMetadata'
+        description: Optional thread-specific fields
+      topic:
+        description: Optional topic of the channel (up to 4096 characters for forum/media
+          channels, 1024 for others)
+        type: string
+      total_message_sent:
+        description: Optional total number of messages ever sent in a thread
+        type: integer
+      type:
+        description: Type of the channel
+        type: integer
+      user_limit:
+        description: Optional user limit of the voice channel
+        type: integer
+      video_quality_mode:
+        description: Optional video quality mode for the voice channel
+        type: integer
+    type: object
+  models.CountDetails:
+    type: object
+  models.DefaultReaction:
+    properties:
+      emoji_id:
+        description: Snowflake ID of the emoji
+        type: string
+      emoji_name:
+        description: Name of the emoji
+        type: string
+    type: object
+  models.Emoji:
+    properties:
+      animated:
+        description: Whether the emoji is animated
+        type: boolean
+      id:
+        description: Define fields for Emoji structure based on your needs
+        type: string
+      managed:
+        description: Whether the emoji is managed by an application
+        type: boolean
+      name:
+        description: Name of the emoji
+        type: string
+      requires_colons:
+        description: Whether the emoji requires colons
+        type: boolean
+      roles:
+        description: Roles allowed to use the emoji
+        items:
+          $ref: '#/definitions/models.Role'
+        type: array
+      user:
+        allOf:
+        - $ref: '#/definitions/models.User'
+        description: Optional user object that created the emoji
+    type: object
+  models.GuildBan:
+    properties:
+      reason:
+        type: string
+      user:
+        $ref: '#/definitions/models.User'
+    type: object
+  models.Member:
+    properties:
+      avatar:
+        description: The member's guild avatar hash
+        type: string
+      avatar_decoration_data:
+        allOf:
+        - $ref: '#/definitions/models.AvatarDecorationData'
+        description: Data for the member's guild avatar decoration
+      communication_disabled_until:
+        description: When the user's timeout will expire
+        type: string
+      deaf:
+        description: Whether the user is deafened in voice channels
+        type: boolean
+      flags:
+        description: Guild member flags represented as a bit set, defaults to 0
+        type: integer
+      joined_at:
+        description: When the user joined the guild
+        type: string
+      mute:
+        description: Whether the user is muted in voice channels
+        type: boolean
+      nick:
+        description: This user's guild nickname
+        type: string
+      pending:
+        description: Whether the user has not yet passed the guild's Membership Screening
+          requirements
+        type: boolean
+      permissions:
+        description: Total permissions of the member in the channel, including overwrites
+        type: string
+      premium_since:
+        description: When the user started boosting the guild
+        type: string
+      roles:
+        description: Array of role object IDs
+        items:
+          type: string
+        type: array
+      user:
+        allOf:
+        - $ref: '#/definitions/models.User'
+        description: The user this guild member represents
+    type: object
+  models.Message:
+    properties:
+      activity:
+        description: Sent with Rich Presence-related chat embeds
+      application:
+        description: Sent with Rich Presence-related chat embeds
+      application_id:
+        description: ID of the application if the message is an Interaction or application-owned
+          webhook
+        type: string
+      attachments:
+        description: Any attached files
+        items: {}
+        type: array
+      author:
+        allOf:
+        - $ref: '#/definitions/models.User'
+        description: The author of this message (not guaranteed to be a valid user)
+      call:
+        description: The call associated with the message
+      channel_id:
+        description: ID of the channel the message was sent in
+        type: string
+      components:
+        description: Sent if the message contains components like buttons, action
+          rows, etc.
+        items: {}
+        type: array
+      content:
+        description: Contents of the message
+        type: string
+      edited_timestamp:
+        description: When this message was edited (or null if never)
+        type: string
+      embeds:
+        description: Any embedded content
+        items: {}
+        type: array
+      flags:
+        description: Message flags combined as a bitfield
+        type: integer
+      id:
+        description: ID of the message
+        type: string
+      interaction:
+        description: Deprecated in favor of interaction_metadata
+      interaction_metadata:
+        description: Sent if the message is sent as a result of an interaction
+      mention_channels:
+        description: Channels specifically mentioned in this message
+        items: {}
+        type: array
+      mention_everyone:
+        description: Whether this message mentions everyone
+        type: boolean
+      mention_roles:
+        description: Roles specifically mentioned in this message
+        items:
+          type: string
+        type: array
+      mentions:
+        description: Users specifically mentioned in the message
+        items:
+          $ref: '#/definitions/models.User'
+        type: array
+      message_reference:
+        description: Data showing the source of a crosspost, channel follow add, pin,
+          or reply message
+      message_snapshots:
+        description: The message associated with the message_reference
+        items: {}
+        type: array
+      nonce:
+        description: Used for validating a message was sent
+      pinned:
+        description: Whether this message is pinned
+        type: boolean
+      poll:
+        description: A poll!
+      position:
+        description: Approximate position of the message in a thread
+        type: integer
+      reactions:
+        description: Reactions to the message
+        items:
+          $ref: '#/definitions/models.Reaction'
+        type: array
+      referenced_message:
+        allOf:
+        - $ref: '#/definitions/models.Message'
+        description: The message associated with the message_reference
+      resolved:
+        description: Data for users, members, channels, and roles in the message's
+          auto-populated select menus
+      role_subscription_data:
+        description: Data of the role subscription purchase or renewal
+      sticker_items:
+        description: Sent if the message contains stickers
+        items: {}
+        type: array
+      stickers:
+        description: Deprecated the stickers sent with the message
+        items:
+          $ref: '#/definitions/models.Sticker'
+        type: array
+      thread:
+        allOf:
+        - $ref: '#/definitions/models.Channel'
+        description: The thread that was started from this message
+      timestamp:
+        description: When this message was sent
+        type: string
+      tts:
+        description: Whether this was a TTS message
+        type: boolean
+      type:
+        description: Type of message
+        type: integer
+      webhook_id:
+        description: If the message is generated by a webhook
+        type: string
+    type: object
+  models.PartialEmoji:
+    properties:
+      animated:
+        description: Whether the emoji is animated
+        type: boolean
+      id:
+        description: ID of the emoji (if it's a custom emoji)
+        type: string
+      name:
+        description: Name of the emoji
+        type: string
+    type: object
+  models.PermissionOverwrite:
+    properties:
+      allow:
+        description: Allowed permissions bit set
+        type: string
+      deny:
+        description: Denied permissions bit set
+        type: string
+      id:
+        description: Snowflake ID of the overwrite (role or user)
+        type: string
+      type:
+        description: Type of overwrite (0 = role, 1 = member)
+        type: integer
+    type: object
+  models.Reaction:
+    properties:
+      burst_colors:
+        description: HEX colors used for super reaction
+        items:
+          type: string
+        type: array
+      count:
+        description: Total number of times this emoji has been used to react (including
+          super reacts)
+        type: integer
+      count_details:
+        allOf:
+        - $ref: '#/definitions/models.CountDetails'
+        description: Reaction count details object
+      emoji:
+        allOf:
+        - $ref: '#/definitions/models.PartialEmoji'
+        description: Emoji information
+      me:
+        description: Whether the current user reacted using this emoji
+        type: boolean
+      me_burst:
+        description: Whether the current user super-reacted using this emoji
+        type: boolean
+    type: object
+  models.Role:
+    properties:
+      color:
+        description: Color of the role
+        type: integer
+      hoist:
+        description: Whether the role is hoisted in the user list
+        type: boolean
+      id:
+        description: Define fields for Role structure based on your needs
+        type: string
+      managed:
+        description: Whether the role is managed by an application
+        type: boolean
+      mentionable:
+        description: Whether the role is mentionable
+        type: boolean
+      name:
+        description: Name of the role
+        type: string
+      permissions:
+        description: Permissions for the role
+        type: string
+      position:
+        description: Position of the role
+        type: integer
+    type: object
+  models.RoleParams:
+    properties:
+      color:
+        description: RGB color value
+        type: integer
+      hoist:
+        description: Whether the role should be displayed separately in the sidebar
+        type: boolean
+      icon:
+        description: The role's icon image (if the guild has the ROLE_ICONS feature)
+        type: string
+      mentionable:
+        description: Whether the role should be mentionable
+        type: boolean
+      name:
+        description: Name of the role, max 100 characters
+        type: string
+      permissions:
+        description: Bitwise value of the enabled/disabled permissions
+        type: string
+      unicode_emoji:
+        description: The role's unicode emoji as a standard emoji (if the guild has
+          the ROLE_ICONS feature)
+        type: string
+    type: object
+  models.Sticker:
+    properties:
+      description:
+        description: Optional description of the sticker
+        type: string
+      format_type:
+        description: Format type of the sticker
+        type: integer
+      id:
+        description: Define fields for Sticker structure based on your needs
+        type: string
+      name:
+        description: Name of the sticker
+        type: string
+      pack_id:
+        description: ID of the sticker pack
+        type: string
+    type: object
+  models.Tag:
+    properties:
+      emoji:
+        description: Optional emoji associated with the tag
+        type: string
+      id:
+        description: Snowflake ID of the tag
+        type: string
+      name:
+        description: Name of the tag
+        type: string
+    type: object
+  models.ThreadMember:
+    properties:
+      flags:
+        description: Thread member flags
+        type: integer
+      id:
+        description: Snowflake ID of the thread member
+        type: string
+      join_timestamp:
+        description: ISO8601 timestamp when the member joined
+        type: string
+      user_id:
+        description: Snowflake ID of the user
+        type: string
+    type: object
+  models.ThreadMetadata:
+    properties:
+      archive_timestamp:
+        description: ISO8601 timestamp when the thread was archived
+        type: string
+      archived:
+        description: Whether the thread is archived
+        type: boolean
+      auto_archive_duration:
+        description: Duration in minutes to auto-archive
+        type: integer
+      locked:
+        description: Whether the thread is locked
+        type: boolean
+    type: object
+  models.User:
+    properties:
+      accent_color:
+        description: Optional banner color as an integer
+        type: integer
+      avatar:
+        description: Optional avatar hash of the user
+        type: string
+      avatar_decoration_data:
+        allOf:
+        - $ref: '#/definitions/models.AvatarDecorationData'
+        description: Optional avatar decoration data
+      banner:
+        description: Optional banner hash of the user
+        type: string
+      bot:
+        description: Optional flag indicating if the user is a bot
+        type: boolean
+      discriminator:
+        description: User's Discord tag (four-digit identifier)
+        type: string
+      email:
+        description: Optional user's email
+        type: string
+      flags:
+        description: Optional flags on the user's account
+        type: integer
+      global_name:
+        description: Optional display name (for bots, the application name)
+        type: string
+      id:
+        description: Snowflake ID of the user
+        type: string
+      locale:
+        description: Optional user's chosen language
+        type: string
+      mfa_enabled:
+        description: Optional flag indicating if 2FA is enabled
+        type: boolean
+      premium_type:
+        description: Optional Nitro subscription type
+        type: integer
+      public_flags:
+        description: Optional public flags on the user's account
+        type: integer
+      system:
+        description: Optional flag indicating if the user is a system user
+        type: boolean
+      username:
+        description: Username of the user (not unique)
+        type: string
+      verified:
+        description: Optional flag indicating if the email is verified
+        type: boolean
+    type: object
+  models.WelcomeChannel:
+    properties:
+      channel_id:
+        description: ID of the channel
+        type: string
+      description:
+        description: Optional description for the channel
+        type: string
+      emoji:
+        description: Optional emoji for the channel
+        type: string
+    type: object
+  models.WelcomeScreen:
+    properties:
+      description:
+        description: Define fields relevant to the welcome screen as needed
+        type: string
+      welcome_channels:
+        description: Channels to show on the welcome screen
+        items:
+          $ref: '#/definitions/models.WelcomeChannel'
+        type: array
+    type: object
+host: localhost:90
+info:
+  contact: {}
+  description: API for managing Discord guilds using DiscordGo and Fiber.
+  title: Discord Guild Management API
+  version: "1.0"
+paths:
+  /api/guild:
+    get:
+      description: Retrieve the guild information.
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/disgm.Guild'
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: Get Guild
+      tags:
+      - Guild
+  /api/guild/bans:
+    get:
+      description: Retrieve all banned users from the guild.
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.GuildBan'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: Get Guild Bans
+      tags:
+      - Bans
+  /api/guild/bans/{userid}:
+    delete:
+      description: Remove a ban for a user in the guild.
+      parameters:
+      - description: User ID
+        in: path
+        name: userid
+        required: true
+        type: string
+      responses:
+        "204":
+          description: No Content
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: Remove Guild Ban
+      tags:
+      - Bans
+    get:
+      description: Retrieve a specific banned user by user ID.
+      parameters:
+      - description: User ID
+        in: path
+        name: userid
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.GuildBan'
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: Get Guild Ban
+      tags:
+      - Bans
+    put:
+      description: Ban a user from the guild.
+      parameters:
+      - description: User ID
+        in: path
+        name: userid
+        required: true
+        type: string
+      responses:
+        "204":
+          description: No Content
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: Add Guild Ban
+      tags:
+      - Bans
+  /api/guild/bulk-ban:
+    post:
+      description: Ban multiple users in the guild at once.
+      responses:
+        "204":
+          description: No Content
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: Bulk Ban Members
+      tags:
+      - Bans
+  /api/guild/channels:
+    get:
+      description: Retrieve all channels from the guild.
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              items:
+                $ref: '#/definitions/models.Channel'
+              type: array
+            type: array
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: Get Guild Channels
+      tags:
+      - Channels
+    post:
+      description: Create a new channel in the guild.
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Channel'
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: Create Guild Channel
+      tags:
+      - Channels
+  /api/guild/channels/{channelid}:
+    delete:
+      description: Delete a specific channel in the guild.
+      parameters:
+      - description: Channel ID
+        in: path
+        name: channelid
+        required: true
+        type: string
+      responses:
+        "204":
+          description: No Content
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: Delete Guild Channel
+      tags:
+      - Channels
+    get:
+      description: Retrieve a specific channel from the guild by ID.
+      parameters:
+      - description: Channel ID
+        in: path
+        name: channelid
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Channel'
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: Get Guild Channel
+      tags:
+      - Channels
+    patch:
+      description: Update a specific channel in the guild.
+      parameters:
+      - description: Channel ID
+        in: path
+        name: channelid
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Channel'
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: Update Guild Channel
+      tags:
+      - Channels
+  /api/guild/channels/{channelid}/messages:
+    get:
+      description: Retrieve all messages from a specific channel.
+      parameters:
+      - description: Channel ID
+        in: path
+        name: channelid
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/disgm.Message'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: Get Channel Messages
+      tags:
+      - Messages
+    post:
+      description: Send a new message to a specific channel.
+      parameters:
+      - description: Channel ID
+        in: path
+        name: channelid
+        required: true
+        type: string
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Message'
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: Send Channel Message
+      tags:
+      - Messages
+  /api/guild/channels/{channelid}/messages/{messageid}:
+    delete:
+      description: Delete a specific message in a channel by ID.
+      parameters:
+      - description: Channel ID
+        in: path
+        name: channelid
+        required: true
+        type: string
+      - description: Message ID
+        in: path
+        name: messageid
+        required: true
+        type: string
+      responses:
+        "204":
+          description: No Content
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: Delete Channel Message
+      tags:
+      - Messages
+    get:
+      description: Retrieve a specific message by ID from a channel.
+      parameters:
+      - description: Channel ID
+        in: path
+        name: channelid
+        required: true
+        type: string
+      - description: Message ID
+        in: path
+        name: messageid
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Message'
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: Get Channel Message
+      tags:
+      - Messages
+    patch:
+      description: Edit a specific message in a channel by ID.
+      parameters:
+      - description: Channel ID
+        in: path
+        name: channelid
+        required: true
+        type: string
+      - description: Message ID
+        in: path
+        name: messageid
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Message'
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: Edit Channel Message
+      tags:
+      - Messages
+  /api/guild/channels/{channelid}/messages/{messageid}/reactions:
+    delete:
+      description: Remove all reactions from a specific message in a channel.
+      parameters:
+      - description: Channel ID
+        in: path
+        name: channelid
+        required: true
+        type: string
+      - description: Message ID
+        in: path
+        name: messageid
+        required: true
+        type: string
+      responses:
+        "204":
+          description: No Content
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: Delete All Message Reactions
+      tags:
+      - Reactions
+  /api/guild/channels/{channelid}/messages/{messageid}/reactions/{emojiid}:
+    delete:
+      description: Remove a specific emoji reaction from a message in a channel.
+      parameters:
+      - description: Channel ID
+        in: path
+        name: channelid
+        required: true
+        type: string
+      - description: Message ID
+        in: path
+        name: messageid
+        required: true
+        type: string
+      - description: Emoji ID
+        in: path
+        name: emojiid
+        required: true
+        type: string
+      responses:
+        "204":
+          description: No Content
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: Delete Message Reaction Emoji
+      tags:
+      - Reactions
+    get:
+      description: Retrieve all reactions from a specific message in a channel.
+      parameters:
+      - description: Channel ID
+        in: path
+        name: channelid
+        required: true
+        type: string
+      - description: Message ID
+        in: path
+        name: messageid
+        required: true
+        type: string
+      - description: Emoji ID
+        in: path
+        name: emojiid
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              items:
+                $ref: '#/definitions/models.User'
+              type: array
+            type: array
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: Get Message Reactions
+      tags:
+      - Reactions
+    put:
+      description: Add a reaction to a specific message in a channel.
+      parameters:
+      - description: Channel ID
+        in: path
+        name: channelid
+        required: true
+        type: string
+      - description: Message ID
+        in: path
+        name: messageid
+        required: true
+        type: string
+      - description: Emoji ID
+        in: path
+        name: emojiid
+        required: true
+        type: string
+      responses:
+        "201":
+          description: Created
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: Create Message Reaction
+      tags:
+      - Reactions
+  /api/guild/channels/{channelid}/messages/{messageid}/reactions/{emojiid}/{userid}:
+    delete:
+      description: Delete a user's reaction from a specific message in a channel.
+      parameters:
+      - description: Channel ID
+        in: path
+        name: channelid
+        required: true
+        type: string
+      - description: Message ID
+        in: path
+        name: messageid
+        required: true
+        type: string
+      - description: Emoji ID
+        in: path
+        name: emojiid
+        required: true
+        type: string
+      - description: User ID
+        in: path
+        name: userid
+        required: true
+        type: string
+      responses:
+        "204":
+          description: No Content
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: Delete Message Reaction
+      tags:
+      - Reactions
+  /api/guild/channels/{channelid}/permissions/{overwriteid}:
+    delete:
+      description: Delete a specific permission overwrite for a channel.
+      parameters:
+      - description: Channel ID
+        in: path
+        name: channelid
+        required: true
+        type: string
+      - description: Overwrite ID
+        in: path
+        name: overwriteid
+        required: true
+        type: string
+      responses:
+        "204":
+          description: No Content
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: Delete Channel Permissions
+      tags:
+      - Channels
+    put:
+      description: Edit permissions for a specific channel in the guild.
+      parameters:
+      - description: Channel ID
+        in: path
+        name: channelid
+        required: true
+        type: string
+      - description: Overwrite ID
+        in: path
+        name: overwriteid
+        required: true
+        type: string
+      responses:
+        "204":
+          description: No Content
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: Edit Channel Permissions
+      tags:
+      - Channels
+  /api/guild/commands:
+    get:
+      description: Retrieve all guild application commands.
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              items:
+                $ref: '#/definitions/models.ApplicationCommand'
+              type: array
+            type: array
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: Get Guild Application Commands
+      tags:
+      - Commands
+    post:
+      description: Create a new guild application command.
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.ApplicationCommand'
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: Create Guild Application Command
+      tags:
+      - Commands
+  /api/guild/commands/{cmdid}:
+    delete:
+      description: Delete a guild application command by ID.
+      parameters:
+      - description: Command ID
+        in: path
+        name: cmdid
+        required: true
+        type: string
+      responses:
+        "204":
+          description: No Content
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: Delete Guild Application Command
+      tags:
+      - Commands
+    get:
+      description: Retrieve a specific guild application command by ID.
+      parameters:
+      - description: Command ID
+        in: path
+        name: cmdid
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ApplicationCommand'
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: Get Guild Application Command
+      tags:
+      - Commands
+  /api/guild/interactions/{interactionid}/{interactiontoken}/callback:
+    post:
+      description: Handle interaction callback for a specific interaction.
+      parameters:
+      - description: Interaction ID
+        in: path
+        name: interactionid
+        required: true
+        type: string
+      - description: Interaction Token
+        in: path
+        name: interactiontoken
+        required: true
+        type: string
+      responses:
+        "204":
+          description: No Content
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: Create Interaction Callback
+      tags:
+      - Interactions
+  /api/guild/members:
+    get:
+      description: Retrieve all members of the guild.
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/disgm.Member'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: Get Guild Members
+      tags:
+      - Members
+  /api/guild/members/{memberid}:
+    get:
+      description: Retrieve a specific member from the guild by ID.
+      parameters:
+      - description: Member ID
+        in: path
+        name: memberid
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Member'
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: Get Guild Member
+      tags:
+      - Members
+    patch:
+      description: Update a specific member in the guild.
+      parameters:
+      - description: Member ID
+        in: path
+        name: memberid
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Member'
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: Update Guild Member
+      tags:
+      - Members
+  /api/guild/members/{memberid}/roles:
+    get:
+      description: Retrieve all roles assigned to a specific member in the guild.
+      parameters:
+      - description: Member ID
+        in: path
+        name: memberid
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Role'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: Get Member Roles
+      tags:
+      - Roles
+  /api/guild/members/{memberid}/roles/{roleid}:
+    delete:
+      description: Remove a role from a specific member in the guild.
+      parameters:
+      - description: Member ID
+        in: path
+        name: memberid
+        required: true
+        type: string
+      - description: Role ID
+        in: path
+        name: roleid
+        required: true
+        type: string
+      responses:
+        "204":
+          description: No Content
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: Remove Member Role
+      tags:
+      - Roles
+    put:
+      description: Add a role to a specific member in the guild.
+      parameters:
+      - description: Member ID
+        in: path
+        name: memberid
+        required: true
+        type: string
+      - description: Role ID
+        in: path
+        name: roleid
+        required: true
+        type: string
+      responses:
+        "204":
+          description: No Content
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: Add Member Role
+      tags:
+      - Roles
+  /api/guild/roles:
+    get:
+      description: Retrieve all roles of a specific guild using the guild ID.
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/disgm.Role'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: Get all roles in a guild
+      tags:
+      - Roles
+    patch:
+      description: Reorder the roles in a guild based on the provided positions.
+      parameters:
+      - description: New role positions
+        in: body
+        name: body
+        required: true
+        schema:
+          items:
+            $ref: '#/definitions/models.Role'
+          type: array
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Role'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: Update role positions in a guild
+      tags:
+      - Roles
+    post:
+      description: Create a new role in a guild using the provided role parameters.
+      parameters:
+      - description: Role parameters
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.RoleParams'
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Role'
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: Create a new role in a guild
+      tags:
+      - Roles
+  /api/guild/roles/{roleid}:
+    delete:
+      description: Delete a specific role from a guild using its role ID.
+      parameters:
+      - description: ID of the role to delete
+        in: path
+        name: roleid
+        required: true
+        type: string
+      responses:
+        "204":
+          description: No Content
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: Delete a role from a guild
+      tags:
+      - Roles
+    get:
+      description: Retrieve a specific role from a guild by its role ID.
+      parameters:
+      - description: ID of the role to retrieve
+        in: path
+        name: roleid
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Role'
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: Get a specific role in a guild
+      tags:
+      - Roles
+    patch:
+      description: Update a specific role in a guild using the provided role data.
+      parameters:
+      - description: ID of the role to update
+        in: path
+        name: roleid
+        required: true
+        type: string
+      - description: Updated role parameters
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.RoleParams'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Role'
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: Update a specific role in a guild
+      tags:
+      - Roles
+  /api/user:
+    get:
+      description: Retrieve the bot's user information.
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/disgm.User'
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: Get Bot User
+      tags:
+      - User
+  /guilds/{guildid}/members/{memberid}:
+    delete:
+      description: Remove a member from the specified guild.
+      parameters:
+      - description: Member ID
+        in: path
+        name: memberid
+        required: true
+        type: string
+      responses:
+        "204":
+          description: No Content
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: Kick Member
+      tags:
+      - Members
+  /ws:
+    get:
+      description: Sets up the WebSocket connection to handle Discord events and messages.
+      produces:
+      - application/json
+      responses: {}
+      summary: Register WebSocket
+      tags:
+      - WebSocket
+swagger: "2.0"
