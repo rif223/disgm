@@ -104,9 +104,11 @@ func New(s *discordgo.Session, options ...Options) (d *Disgm, err error) {
 	return
 }
 
+// Register Api Router
 func (d *Disgm) RegisterApiRouter() {
-    r := d.fiber.Group("/api")
-    Router(r, d.s) // Registers the API routes.
+    d.fiber.Route("/api", func(r fiber.Router) {
+		Router(r, d.s) // Registers the API routes.
+	})
 }
 
 //	@Summary		Register WebSocket

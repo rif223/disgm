@@ -49,7 +49,7 @@ func (t *Test) Load() (tokens map[string]string, err error) {
 
 func main() {
 
-	session, err := discordgo.New("Bot " + "1234567890")
+	session, err := discordgo.New("Bot " + "123456789")
 	if err != nil {
 		log.Fatal("Error creating Discord session,", err)
 	}
