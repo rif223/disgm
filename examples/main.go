@@ -49,13 +49,13 @@ func (t *Test) Load() (tokens map[string]string, err error) {
 
 func main() {
 
-	session, err := discordgo.New("Bot " + "123456789")
+	session, err := discordgo.New("Bot " + "1234567890")
 	if err != nil {
 		log.Fatal("Error creating Discord session,", err)
 	}
 
 	disgmInstance, err := disgm.New(session, disgm.Options{
-		Port: ":90",
+		DisableStartupMessage: true,
 		TokenStore: NewTestStore(".tokens.json"),
 	})
 	if err != nil {
@@ -64,6 +64,8 @@ func main() {
 
 	disgmInstance.RegisterApiRouter()
 	disgmInstance.RegisterWebSocket()
+
+	disgmInstance.Listen()
 
 	err = session.Open()
 	if err != nil {

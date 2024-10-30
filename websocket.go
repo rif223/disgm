@@ -11,8 +11,8 @@ import (
 // Event struct defines the structure of an event that is sent to clients over WebSocket.
 // It contains the event name and the associated data.
 type Event struct {
-	Name string      `json:"name"` // Name of the event (e.g., "MESSAGE_CREATE")
-	Data interface{} `json:"data"` // Event data (can be of any type)
+	Name string      `json:"name"`
+	Data interface{} `json:"data"`
 }
 
 // A map to keep track of connected clients. The map key is the WebSocket connection,
@@ -23,7 +23,6 @@ var clients = make(map[*websocket.Conn]string)
 // It registers the client, sends a welcome message, and listens for incoming messages.
 func WebSocket(conn *websocket.Conn, id string) {
 	defer func() {
-		// Close the connection and clean up when the function exits
 		conn.Close()
 	}()
 
@@ -85,6 +84,5 @@ func EventCall(id string, name string, data interface{}) error {
 			return client.WriteMessage(websocket.TextMessage, eventBytes)
 		}
 	}
-	// Return nil if no matching client is found
 	return nil
 }

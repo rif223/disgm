@@ -20,20 +20,22 @@ import (
 
 // Options contains the configuration for the disgm package.
 type Options struct {
-	Port       string            // The port on which the server runs.
-	TokenStore store.TokenStore // A map of valid tokens for authentication.
+	DisableStartupMessage bool
+	DisableLogger         bool
+	TokenStore            store.TokenStore // A map of valid tokens for authentication.
 }
 
 // defaultOptions defines the default configuration for the disgm package.
 var defaultOptions = Options{
-	Port: ":90",
+	DisableStartupMessage: false,
+	DisableLogger:         false,
 }
 
 // Disgm is the main structure for the package, containing the Discord session and the Fiber server.
 type Disgm struct {
-	opt   *Options       // Options for the application.
+	opt   *Options           // Options for the application.
 	s     *discordgo.Session // The DiscordGo session for interacting with the Discord API.
-	fiber *fiber.App     // The Fiber application for the web server.
+	fiber *fiber.App         // The Fiber application for the web server.
 }
 
 // New creates a new instance of Disgm with the specified DiscordGo session and options.
@@ -46,14 +48,32 @@ type Disgm struct {
 //   - *Disgm: A new instance of Disgm.
 //   - error: An error that may have occurred during initialization.
 
-//	@title			Discord Guild Management API
-//	@version		1.0
-//	@description	API for managing Discord guilds using DiscordGo and Fiber.
-//	@host			localhost:90
+// @title			Discord Guild Management API
+// @version		1.0
+// @description	API for managing Discord guilds using DiscordGo and Fiber.
+// @host			localhost:90
 func New(s *discordgo.Session, options ...Options) (d *Disgm, err error) {
+
+	opt := &defaultOptions
+
+	if len(options) > 0 {
+		o := options[0] // Gets the custom options.
+
+		if o.TokenStore != nil {
+			opt.TokenStore = o.TokenStore // Sets the valid tokens if specified.
+		}
+		if o.DisableStartupMessage {
+			opt.DisableStartupMessage = o.DisableStartupMessage
+		}
+		if o.DisableLogger {
+			opt.DisableLogger = o.DisableLogger
+		}
+	}
+
 	app := fiber.New(fiber.Config{
-		DisableStartupMessage: true, // Disables the startup message of the Fiber server.
-		ProxyHeader: "X-Forwarded-For", // Sets the proxy header for IP forwarding.
+		AppName:               "Disgm",
+		DisableStartupMessage: opt.DisableStartupMessage,
+		ProxyHeader:           "X-Forwarded-For", // Sets the proxy header for IP forwarding.
 		ErrorHandler: func(c *fiber.Ctx, err error) error {
 			fmt.Printf("Error: %v\n", err)
 			return c.Status(fiber.StatusInternalServerError).SendString("Internal Server Error") // Returns an error status.
@@ -61,29 +81,20 @@ func New(s *discordgo.Session, options ...Options) (d *Disgm, err error) {
 	})
 
 	d = &Disgm{
-		opt: &defaultOptions, // Sets the default options.
-		s: s, // Sets the DiscordGo session.
+		opt:   opt, // Sets the default options.
+		s:     s,   // Sets the DiscordGo session.
 		fiber: app, // Sets the Fiber application.
-	}
-
-	if len(options) > 0 {
-		o := options[0] // Gets the custom options.
-
-		if o.Port != "" {
-			d.opt.Port = o.Port // Sets the port if specified.
-		}
-
-		if o.TokenStore != nil {
-			d.opt.TokenStore = o.TokenStore // Sets the valid tokens if specified.
-		}
 	}
 
 	// Configures CORS and logger middleware.
 	app.Use(cors.New(cors.Config{
-		AllowOrigins: "*", // Allows all origins.
-		AllowHeaders: "Origin, Content-Type, Accept, Accept-Language, Content-Length", // Allowed headers.
+		AllowOrigins: "*",
+		AllowHeaders: "Origin, Content-Type, Accept, Accept-Language, Content-Length",
 	}))
-	app.Use(logger.New()) // Adds the logger.
+
+	if !opt.DisableLogger {
+		app.Use(logger.New()) // Adds the logger.
+	}
 
 	// Middleware for token validation.
 	app.Use(func(c *fiber.Ctx) error {
@@ -92,40 +103,30 @@ func New(s *discordgo.Session, options ...Options) (d *Disgm, err error) {
 
 	app.Get("/swagger/*", swagger.HandlerDefault)
 
-	// Starts the Fiber server in a separate goroutine.
-	go func() {
-		if err := app.Listen(d.opt.Port); err != nil {
-			log.Printf("Failed to start Fiber server: %v", err) // Logs errors when starting the server.
-		}
-	}()
-
-	log.Printf("Server started at port: %v", strings.Split(d.opt.Port, ":")[1]) // Logs the startup message.
-
 	return
 }
 
 // Register Api Router
 func (d *Disgm) RegisterApiRouter() {
-    d.fiber.Route("/api", func(r fiber.Router) {
+	d.fiber.Route("/api", func(r fiber.Router) {
 		Router(r, d.s) // Registers the API routes.
 	})
 }
 
-//	@Summary		Register WebSocket
-//	@Description	Sets up the WebSocket connection to handle Discord events and messages.
-//	@Tags			WebSocket
-//	@Produce		json
-//	@Router			/ws [get]
+// @Summary		Register WebSocket
+// @Description	Sets up the WebSocket connection to handle Discord events and messages.
+// @Tags			WebSocket
+// @Produce		json
+// @Router			/ws [get]
 func (d *Disgm) RegisterWebSocket() {
-    registerDiscordHandlers(d.s) // Registers the Discord handlers for events.
+	registerDiscordHandlers(d.s) // Registers the Discord handlers for events.
 
-    // Sets the WebSocket connection.
-    d.fiber.Get("/ws", websocket.New(func(c *websocket.Conn) {
-        ID := c.Locals("ID").(string) // Retrieves the ID from the local context.
-        WebSocket(c, ID) // Handles the WebSocket connection.
-    }))
+	// Sets the WebSocket connection.
+	d.fiber.Get("/ws", websocket.New(func(c *websocket.Conn) {
+		ID := c.Locals("ID").(string) // Retrieves the ID from the local context.
+		WebSocket(c, ID)              // Handles the WebSocket connection.
+	}))
 }
-
 
 // registerDiscordHandlers registers handlers for Discord events.
 //
@@ -177,4 +178,34 @@ func registerDiscordHandlers(s *discordgo.Session) {
 			}
 		}
 	})
+}
+
+// Listen starts the Fiber server on the specified port.
+//
+// This method belongs to the `Disgm` type and initializes an HTTP server using the Fiber framework.
+// By default, the port is set to ":90" if no other port is specified.
+//
+// Parameters:
+//   - port (string): The port on which the server should listen. Defaults to ":90" if left empty.
+//
+// Return:
+//   - error: Returns an error if the server fails to start.
+//
+// Functionality:
+//   - Starts the server in a separate goroutine using Fiber (`app.Listen(port)`) to avoid blocking execution
+//     and logs any errors encountered during startup.
+//   - On success, logs a message indicating the actual port the server is listening on.
+func (d *Disgm) Listen(port ...string) (err error) {
+	if len(port) == 0 || port[0] == "" {
+		port = append(port, ":90")
+	}
+
+	// Starts the Fiber server in a separate goroutine
+	go func() {
+		if err = d.fiber.Listen(port[0]); err != nil {
+			log.Printf("Failed to start Fiber server: %v", err) // Logs any startup errors
+		}
+	}()
+	log.Printf("Server started at port: %v", strings.Split(port[0], ":")[1]) // Logs startup message
+	return err
 }
