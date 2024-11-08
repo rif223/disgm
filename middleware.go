@@ -21,9 +21,11 @@ func TokenMiddleware(disgm *Disgm, c *fiber.Ctx) error {
 				return c.Status(fiber.StatusUnauthorized).SendString("Unauthorized")
 			}
 
-			if id, ok := tokens[splToken[1]]; ok {
-				c.Locals("ID", id)
-				return c.Next()
+			for k, v := range tokens {
+				if v == splToken[1] {
+					c.Locals("ID", k)
+					return c.Next()
+				}
 			}
 		}
 	}
