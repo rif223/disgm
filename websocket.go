@@ -65,7 +65,7 @@ func (ws *WS) handleMessages(messageHandlerFunc func(id string, msg []byte)) {
 			log.Printf("error: %v", err)
 			break
 		}
-		messageHandlerFunc(ws.id, msg)
+		messageHandlerFunc(ws.id, msg) // Call the message handler function with the client ID and message
 	}
 }
 
