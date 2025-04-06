@@ -15,48 +15,57 @@ type Event struct {
 	Data interface{} `json:"data"`
 }
 
+type WS struct {
+	conn *websocket.Conn // The WebSocket connection for real-time communication.
+	id   string         // The unique ID of the client connected via WebSocket.
+}
+
 // A map to keep track of connected clients. The map key is the WebSocket connection,
 // and the value is the client's unique ID.
 var clients = make(map[*websocket.Conn]string)
 
 // WebSocket function manages the lifecycle of a WebSocket connection.
 // It registers the client, sends a welcome message, and listens for incoming messages.
-func WebSocket(conn *websocket.Conn, id string) {
+func NewWebSocket(conn *websocket.Conn, id string) (*WS, error) {
 	defer func() {
 		conn.Close()
 	}()
 
 	// Register the client with their unique ID
 	clients[conn] = id
-	log.Printf("Client connected: %s", id)
+	log.Printf("[%s] Client connected!", id)
 
 	// Send a welcome message to the client
-	conn.WriteMessage(websocket.TextMessage, []byte("Welcome! You are connected."))
+	err := conn.WriteMessage(websocket.TextMessage, []byte("Welcome! You are connected."))
+	if err != nil {
+		return nil, err
+	}
 
-	// Handle incoming messages from the client
-	handleMessages(conn, id)
+	return &WS{
+		conn: conn,
+		id:   id,
+	}, nil
 }
 
 // handleMessages continuously listens for messages from the connected client
 // and logs the received messages. It also handles client disconnections.
-func handleMessages(conn *websocket.Conn, id string) {
+func (ws *WS) handleMessages(messageHandlerFunc func(id string, msg []byte)) {
 	defer func() {
 		// Close the connection and remove the client from the map on disconnect
-		conn.Close()
-		delete(clients, conn)
-		log.Printf("Client disconnected: %s", id)
+		ws.conn.Close()
+		delete(clients, ws.conn)
+		log.Printf("[%s] Client disconnected!", ws.id)
 	}()
 
 	// Loop to continuously read messages from the WebSocket connection
 	for {
-		_, msg, err := conn.ReadMessage() // Read the message from the client
+		_, msg, err := ws.conn.ReadMessage() // Read the message from the client
 		if err != nil {
 			// Log any errors (like client disconnection or message read error)
 			log.Printf("error: %v", err)
 			break
 		}
-		// Log the message along with the client ID
-		log.Printf("%s: %s", id, msg)
+		messageHandlerFunc(ws.id, msg)
 	}
 }
 
@@ -77,7 +86,7 @@ func EventCall(id string, name string, data interface{}) error {
 			eventBytes, err := json.Marshal(event)
 			if err != nil {
 				// Return an error if JSON marshalling fails
-				return fmt.Errorf("error marshalling message: %v", err)
+				return fmt.Errorf("marshalling message: %v", err)
 			}
 
 			// Write the JSON-encoded event to the client's WebSocket connection

@@ -23,6 +23,7 @@ type Options struct {
 	DisableStartupMessage bool
 	DisableLogger         bool
 	TokenStore            store.TokenStore // A map of valid tokens for authentication.
+	WSMessageHandlerFunc  func(id string, msg []byte) // A function to handle messages from the WebSocket connection.
 }
 
 // defaultOptions defines the default configuration for the disgm package.
@@ -36,6 +37,8 @@ type Disgm struct {
 	opt   *Options           // Options for the application.
 	s     *discordgo.Session // The DiscordGo session for interacting with the Discord API.
 	fiber *fiber.App         // The Fiber application for the web server.
+	ws   *WS			     // The WebSocket connection for real-time communication.
+	WSMessageHandlerFunc func(id string, msg []byte) // A function to handle messages from the WebSocket connection.
 }
 
 // New creates a new instance of Disgm with the specified DiscordGo session and options.
@@ -68,6 +71,13 @@ func New(s *discordgo.Session, options ...Options) (d *Disgm, err error) {
 		if o.DisableLogger {
 			opt.DisableLogger = o.DisableLogger
 		}
+		if o.WSMessageHandlerFunc != nil {
+			opt.WSMessageHandlerFunc = o.WSMessageHandlerFunc // Sets the message handler function if specified.
+		} else {
+			opt.WSMessageHandlerFunc = func(id string, msg []byte) {
+				log.Printf("[%s] %s", id, msg)// Default message handler function.
+			}
+		}
 	}
 
 	app := fiber.New(fiber.Config{
@@ -84,6 +94,7 @@ func New(s *discordgo.Session, options ...Options) (d *Disgm, err error) {
 		opt:   opt, // Sets the default options.
 		s:     s,   // Sets the DiscordGo session.
 		fiber: app, // Sets the Fiber application.
+		WSMessageHandlerFunc: opt.WSMessageHandlerFunc, // Sets the message handler function.
 	}
 
 	// Configures CORS and logger middleware.
@@ -123,9 +134,22 @@ func (d *Disgm) RegisterWebSocket() {
 
 	// Sets the WebSocket connection.
 	d.fiber.Get("/ws", websocket.New(func(c *websocket.Conn) {
+
 		ID := c.Locals("ID").(string) // Retrieves the ID from the local context.
-		WebSocket(c, ID)              // Handles the WebSocket connection.
+		ws, err := NewWebSocket(c, ID) // Handles the WebSocket connection.
+		if err != nil {
+			log.Printf("Error: %v", err) // Logs any errors.
+			return
+		}
+
+		d.ws = ws // Sets the WebSocket connection.
+
+		ws.handleMessages(d.WSMessageHandlerFunc)
 	}))
+}
+
+func (d *Disgm) GetWebSocket() *WS {
+	return d.ws // Returns the WebSocket connection.
 }
 
 // registerDiscordHandlers registers handlers for Discord events.
@@ -167,7 +191,7 @@ func registerDiscordHandlers(s *discordgo.Session) {
 
 			err := json.Unmarshal(e.RawData, &data) // Converts the raw event data into a map.
 			if err != nil {
-				log.Printf("error: %v", err) // Logs errors when processing event data.
+				log.Printf("Error: %v", err) // Logs errors when processing event data.
 				return
 			}
 
