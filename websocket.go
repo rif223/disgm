@@ -17,7 +17,7 @@ type Event struct {
 
 type WS struct {
 	conn *websocket.Conn // The WebSocket connection for real-time communication.
-	id   string         // The unique ID of the client connected via WebSocket.
+	id   string          // The unique ID of the client connected via WebSocket.
 }
 
 // A map to keep track of connected clients. The map key is the WebSocket connection,

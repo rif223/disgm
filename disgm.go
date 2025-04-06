@@ -22,7 +22,7 @@ import (
 type Options struct {
 	DisableStartupMessage bool
 	DisableLogger         bool
-	TokenStore            store.TokenStore // A map of valid tokens for authentication.
+	TokenStore            store.TokenStore            // A map of valid tokens for authentication.
 	WSMessageHandlerFunc  func(id string, msg []byte) // A function to handle messages from the WebSocket connection.
 }
 
@@ -34,10 +34,10 @@ var defaultOptions = Options{
 
 // Disgm is the main structure for the package, containing the Discord session and the Fiber server.
 type Disgm struct {
-	opt   *Options           // Options for the application.
-	s     *discordgo.Session // The DiscordGo session for interacting with the Discord API.
-	fiber *fiber.App         // The Fiber application for the web server.
-	ws   *WS			     // The WebSocket connection for real-time communication.
+	opt                  *Options                    // Options for the application.
+	s                    *discordgo.Session          // The DiscordGo session for interacting with the Discord API.
+	fiber                *fiber.App                  // The Fiber application for the web server.
+	ws                   *WS                         // The WebSocket connection for real-time communication.
 	WSMessageHandlerFunc func(id string, msg []byte) // A function to handle messages from the WebSocket connection.
 }
 
@@ -75,7 +75,7 @@ func New(s *discordgo.Session, options ...Options) (d *Disgm, err error) {
 			opt.WSMessageHandlerFunc = o.WSMessageHandlerFunc // Sets the message handler function if specified.
 		} else {
 			opt.WSMessageHandlerFunc = func(id string, msg []byte) {
-				log.Printf("[%s] %s", id, msg)// Default message handler function.
+				log.Printf("[%s] %s", id, msg) // Default message handler function.
 			}
 		}
 	}
@@ -91,9 +91,9 @@ func New(s *discordgo.Session, options ...Options) (d *Disgm, err error) {
 	})
 
 	d = &Disgm{
-		opt:   opt, // Sets the default options.
-		s:     s,   // Sets the DiscordGo session.
-		fiber: app, // Sets the Fiber application.
+		opt:                  opt,                      // Sets the default options.
+		s:                    s,                        // Sets the DiscordGo session.
+		fiber:                app,                      // Sets the Fiber application.
 		WSMessageHandlerFunc: opt.WSMessageHandlerFunc, // Sets the message handler function.
 	}
 
@@ -135,7 +135,7 @@ func (d *Disgm) RegisterWebSocket() {
 	// Sets the WebSocket connection.
 	d.fiber.Get("/ws", websocket.New(func(c *websocket.Conn) {
 
-		ID := c.Locals("ID").(string) // Retrieves the ID from the local context.
+		ID := c.Locals("ID").(string)  // Retrieves the ID from the local context.
 		ws, err := NewWebSocket(c, ID) // Handles the WebSocket connection.
 		if err != nil {
 			log.Printf("Error: %v", err) // Logs any errors.

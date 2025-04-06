@@ -46,7 +46,6 @@ func (t *Test) Load() (tokens map[string]string, err error) {
 	return
 }
 
-
 func main() {
 
 	session, err := discordgo.New("Bot " + "1234567890")
@@ -56,7 +55,7 @@ func main() {
 
 	disgmInstance, err := disgm.New(session, disgm.Options{
 		DisableStartupMessage: true,
-		TokenStore: NewTestStore(".tokens.json"),
+		TokenStore:            NewTestStore(".tokens.json"),
 	})
 	if err != nil {
 		log.Fatal("Error initializing Disgm,", err)

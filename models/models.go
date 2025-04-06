@@ -331,11 +331,11 @@ type PartialEmoji struct {
 
 // RoleParms structure representing the parameters for a role in a guild.
 type RoleParams struct {
-    Name          string `json:"name"`              // Name of the role, max 100 characters
-    Permissions   string `json:"permissions"`       // Bitwise value of the enabled/disabled permissions
-    Color         int    `json:"color"`             // RGB color value
-    Hoist         bool   `json:"hoist"`             // Whether the role should be displayed separately in the sidebar
-    Icon          string `json:"icon,omitempty"`    // The role's icon image (if the guild has the ROLE_ICONS feature)
-    UnicodeEmoji  string `json:"unicode_emoji,omitempty"` // The role's unicode emoji as a standard emoji (if the guild has the ROLE_ICONS feature)
-    Mentionable   bool   `json:"mentionable"`       // Whether the role should be mentionable
+	Name         string `json:"name"`                    // Name of the role, max 100 characters
+	Permissions  string `json:"permissions"`             // Bitwise value of the enabled/disabled permissions
+	Color        int    `json:"color"`                   // RGB color value
+	Hoist        bool   `json:"hoist"`                   // Whether the role should be displayed separately in the sidebar
+	Icon         string `json:"icon,omitempty"`          // The role's icon image (if the guild has the ROLE_ICONS feature)
+	UnicodeEmoji string `json:"unicode_emoji,omitempty"` // The role's unicode emoji as a standard emoji (if the guild has the ROLE_ICONS feature)
+	Mentionable  bool   `json:"mentionable"`             // Whether the role should be mentionable
 }
