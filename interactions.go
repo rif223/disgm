@@ -26,6 +26,7 @@ import (
 //   - On success, it returns HTTP status 204 (No Content).
 //   - On failure, it returns an HTTP status 400 (Bad Request) if the request body is invalid,
 //     or HTTP status 500 (Internal Server Error) if there is a problem sending the response.
+//
 // @Summary		Create Interaction Callback
 // @Description	Handle interaction callback for a specific interaction.
 // @Tags			Interactions

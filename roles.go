@@ -20,6 +20,7 @@ type Role = models.Role
 // Returns:
 //   - On success, it returns the roles as a JSON array with HTTP status 200.
 //   - On failure, it returns an HTTP status 500 and an error message if the roles cannot be retrieved.
+//
 // @Summary		Get all roles in a guild
 // @Description	Retrieve all roles of a specific guild using the guild ID.
 // @Tags			Roles
@@ -49,6 +50,7 @@ func GetGuildRoles(c *fiber.Ctx, s *discordgo.Session) error {
 // Returns:
 //   - On success, it returns the role object as JSON with HTTP status 200.
 //   - On failure, it returns an HTTP status 500 and an error message if the role cannot be retrieved.
+//
 // @Summary		Get a specific role in a guild
 // @Description	Retrieve a specific role from a guild by its role ID.
 // @Tags			Roles
@@ -80,6 +82,7 @@ func GetGuildRole(c *fiber.Ctx, s *discordgo.Session) error {
 // Returns:
 //   - On success, it returns the created role as JSON with HTTP status 201.
 //   - On failure, it returns an HTTP status 500 and an error message if the role cannot be created.
+//
 // @Summary		Create a new role in a guild
 // @Description	Create a new role in a guild using the provided role parameters.
 // @Tags			Roles
@@ -115,6 +118,7 @@ func CreateGuildRole(c *fiber.Ctx, s *discordgo.Session) error {
 // Returns:
 //   - On success, it returns the updated roles as JSON with HTTP status 200.
 //   - On failure, it returns an HTTP status 500 and an error message if the role positions cannot be updated.
+//
 // @Summary		Update role positions in a guild
 // @Description	Reorder the roles in a guild based on the provided positions.
 // @Tags			Roles
@@ -150,6 +154,7 @@ func UpdateGuildRolePositions(c *fiber.Ctx, s *discordgo.Session) error {
 // Returns:
 //   - On success, it returns the updated role as JSON with HTTP status 200.
 //   - On failure, it returns an HTTP status 500 and an error message if the role cannot be updated.
+//
 // @Summary		Update a specific role in a guild
 // @Description	Update a specific role in a guild using the provided role data.
 // @Tags			Roles
@@ -187,6 +192,7 @@ func UpdateGuildRole(c *fiber.Ctx, s *discordgo.Session) error {
 // Returns:
 //   - On success, it returns an HTTP status 204 (No Content).
 //   - On failure, it returns an HTTP status 500 and an error message if the role cannot be deleted.
+//
 // @Summary		Delete a role from a guild
 // @Description	Delete a specific role from a guild using its role ID.
 // @Tags			Roles

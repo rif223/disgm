@@ -20,6 +20,7 @@ type UserArray = []models.User
 // Returns:
 //   - On success, it returns the list of users who reacted with the emoji as JSON with HTTP status 200.
 //   - On failure, it returns an HTTP status 500 and an error message if the reactions cannot be retrieved.
+//
 // @Summary		Get Message Reactions
 // @Description	Retrieve all reactions from a specific message in a channel.
 // @Tags			Reactions
@@ -54,6 +55,7 @@ func GetMessageReactions(c *fiber.Ctx, s *discordgo.Session) error {
 // Returns:
 //   - On success, it returns HTTP status 204 (No Content) if the reaction is successfully added.
 //   - On failure, it returns an HTTP status 500 and an error message if the reaction cannot be added.
+//
 // @Summary		Create Message Reaction
 // @Description	Add a reaction to a specific message in a channel.
 // @Tags			Reactions
@@ -88,6 +90,7 @@ func CreateMessageReaction(c *fiber.Ctx, s *discordgo.Session) error {
 // Returns:
 //   - On success, it returns HTTP status 204 (No Content) if the reaction is successfully removed.
 //   - On failure, it returns an HTTP status 500 and an error message if the reaction cannot be removed.
+//
 // @Summary		Delete Message Reaction
 // @Description	Delete a user's reaction from a specific message in a channel.
 // @Tags			Reactions
@@ -124,6 +127,7 @@ func DeleteMessageReaction(c *fiber.Ctx, s *discordgo.Session) error {
 // Returns:
 //   - On success, it returns HTTP status 204 (No Content) if all reactions are successfully removed.
 //   - On failure, it returns an HTTP status 500 and an error message if the reactions cannot be removed.
+//
 // @Summary		Delete All Message Reactions
 // @Description	Remove all reactions from a specific message in a channel.
 // @Tags			Reactions
@@ -156,6 +160,7 @@ func DeleteAllMessageReaction(c *fiber.Ctx, s *discordgo.Session) error {
 // Returns:
 //   - On success, it returns HTTP status 204 (No Content) if all reactions for the emoji are successfully removed.
 //   - On failure, it returns an HTTP status 500 and an error message if the reactions cannot be removed.
+//
 // @Summary		Delete Message Reaction Emoji
 // @Description	Remove a specific emoji reaction from a message in a channel.
 // @Tags			Reactions

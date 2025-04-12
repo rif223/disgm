@@ -20,6 +20,7 @@ type Member = models.Member
 // Returns:
 //   - On success, it returns the list of guild members as JSON with HTTP status 200.
 //   - On failure, it returns an HTTP status 500 and an error message if the members cannot be retrieved.
+//
 // @Summary		Get Guild Members
 // @Description	Retrieve all members of the guild.
 // @Tags			Members
@@ -49,6 +50,7 @@ func GetGuildMembers(c *fiber.Ctx, s *discordgo.Session) error {
 // Returns:
 //   - On success, it returns the guild member as JSON with HTTP status 200.
 //   - On failure, it returns an HTTP status 500 and an error message if the member cannot be retrieved.
+//
 // @Summary		Get Guild Member
 // @Description	Retrieve a specific member from the guild by ID.
 // @Tags			Members
@@ -81,6 +83,7 @@ func GetGuildMember(c *fiber.Ctx, s *discordgo.Session) error {
 // Returns:
 //   - On success, it returns the updated guild member as JSON with HTTP status 200.
 //   - On failure, it returns an HTTP status 500 and an error message if the member cannot be updated.
+//
 // @Summary		Update Guild Member
 // @Description	Update a specific member in the guild.
 // @Tags			Members
@@ -117,6 +120,7 @@ func UpdateGuildMember(c *fiber.Ctx, s *discordgo.Session) error {
 // Returns:
 //   - On success, it returns the list of roles assigned to the member as JSON with HTTP status 200.
 //   - On failure, it returns an HTTP status 500 and an error message if the member roles cannot be retrieved.
+//
 // @Summary		Get Member Roles
 // @Description	Retrieve all roles assigned to a specific member in the guild.
 // @Tags			Roles
@@ -148,6 +152,7 @@ func GetMemberRoles(c *fiber.Ctx, s *discordgo.Session) error {
 // Returns:
 //   - On success, it returns HTTP status 204 (No Content).
 //   - On failure, it returns an HTTP status 500 and an error message if the role cannot be added.
+//
 // @Summary		Add Member Role
 // @Description	Add a role to a specific member in the guild.
 // @Tags			Roles
@@ -181,6 +186,7 @@ func AddMemberRole(c *fiber.Ctx, s *discordgo.Session) error {
 // Returns:
 //   - On success, it returns HTTP status 204 (No Content).
 //   - On failure, it returns an HTTP status 500 and an error message if the role cannot be removed.
+//
 // @Summary		Remove Member Role
 // @Description	Remove a role from a specific member in the guild.
 // @Tags			Roles
@@ -214,6 +220,7 @@ func RemoveMemberRole(c *fiber.Ctx, s *discordgo.Session) error {
 // Returns:
 //   - On success, it returns HTTP status 204 (No Content).
 //   - On failure, it returns an HTTP status 500 and an error message if the member cannot be removed.
+//
 // @Summary		Kick Member
 // @Description	Remove a member from the specified guild.
 // @Tags			Members

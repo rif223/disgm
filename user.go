@@ -22,12 +22,12 @@ type User = models.User
 //   - If successful, it returns the user object in JSON format with HTTP status 200.
 //   - If an error occurs while retrieving the bot user, it returns an HTTP status 500
 //     with an error message.
-//	@Summary		Get Bot User
-//	@Description	Retrieve the bot's user information.
-//	@Tags			User
-//	@Success		200	{object}	User
-//	@Failure		500	{object}	error
-//	@Router			/api/user [get]
+//     @Summary		Get Bot User
+//     @Description	Retrieve the bot's user information.
+//     @Tags			User
+//     @Success		200	{object}	User
+//     @Failure		500	{object}	error
+//     @Router			/api/user [get]
 func GetBotUser(c *fiber.Ctx, s *discordgo.Session) error {
 
 	// Retrieve the bot user from the Discord API using the "@me" identifier

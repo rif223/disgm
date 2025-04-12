@@ -23,6 +23,7 @@ type ApplicationCommandArray = []models.ApplicationCommand
 // Returns:
 //   - On success, it returns a JSON list of application commands.
 //   - On failure, it returns an HTTP status 500 (Internal Server Error) with an error message.
+//
 // @Summary		Get Guild Application Commands
 // @Description	Retrieve all guild application commands.
 // @Tags			Commands
@@ -59,6 +60,7 @@ func GetGuildApplicationCommands(c *fiber.Ctx, s *discordgo.Session) error {
 // Returns:
 //   - On success, it returns the application command details as JSON.
 //   - On failure, it returns an HTTP status 500 (Internal Server Error) with an error message.
+//
 // @Summary		Get Guild Application Command
 // @Description	Retrieve a specific guild application command by ID.
 // @Tags			Commands
@@ -98,6 +100,7 @@ func GetGuildApplicationCommand(c *fiber.Ctx, s *discordgo.Session) error {
 //   - On success, it returns the newly created application command as JSON.
 //   - On failure, it returns an HTTP status 400 (Bad Request) if the request body is invalid,
 //     or an HTTP status 500 (Internal Server Error) if command creation fails.
+//
 // @Summary		Create Guild Application Command
 // @Description	Create a new guild application command.
 // @Tags			Commands
@@ -139,6 +142,7 @@ func CreateGuildApplicationCommand(c *fiber.Ctx, s *discordgo.Session) error {
 // Returns:
 //   - On success, it returns HTTP status 204 (No Content).
 //   - On failure, it returns an HTTP status 500 (Internal Server Error) with an error message.
+//
 // @Summary		Delete Guild Application Command
 // @Description	Delete a guild application command by ID.
 // @Tags			Commands

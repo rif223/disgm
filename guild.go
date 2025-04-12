@@ -23,6 +23,7 @@ type Guild = models.Guild
 // Returns:
 //   - On success, it returns the guild details as JSON.
 //   - On failure, it returns an HTTP status 500 (Internal Server Error) with an error message.
+//
 // @Summary		Get Guild
 // @Description	Retrieve the guild information.
 // @Tags			Guild
@@ -55,6 +56,7 @@ func GetGuild(c *fiber.Ctx, s *discordgo.Session) error {
 // Returns:
 //   - On success, it returns the list of bans as JSON.
 //   - On failure, it returns an HTTP status 500 (Internal Server Error) with an error message.
+//
 // @Summary		Get Guild Bans
 // @Description	Retrieve all banned users from the guild.
 // @Tags			Bans
@@ -90,6 +92,7 @@ func GetGuildBans(c *fiber.Ctx, s *discordgo.Session) error {
 // Returns:
 //   - On success, it returns the details of the banned member as JSON.
 //   - On failure, it returns an HTTP status 500 (Internal Server Error) with an error message.
+//
 // @Summary		Get Guild Ban
 // @Description	Retrieve a specific banned user by user ID.
 // @Tags			Bans
@@ -132,6 +135,7 @@ func GetGuildBan(c *fiber.Ctx, s *discordgo.Session) error {
 //   - On success, it returns HTTP status 204 (No Content).
 //   - On failure, it returns an HTTP status 400 (Bad Request) if the request body is invalid,
 //     or HTTP status 500 (Internal Server Error) if the ban creation fails.
+//
 // @Summary		Add Guild Ban
 // @Description	Ban a user from the guild.
 // @Tags			Bans
@@ -177,6 +181,7 @@ func AddGuildBan(c *fiber.Ctx, s *discordgo.Session) error {
 // Returns:
 //   - On success, it returns HTTP status 204 (No Content).
 //   - On failure, it returns an HTTP status 500 (Internal Server Error) with an error message.
+//
 // @Summary		Remove Guild Ban
 // @Description	Remove a ban for a user in the guild.
 // @Tags			Bans
@@ -215,6 +220,7 @@ func RemoveGuildBan(c *fiber.Ctx, s *discordgo.Session) error {
 //   - On success, it returns HTTP status 204 (No Content).
 //   - On failure, it returns an HTTP status 400 (Bad Request) if the request body is invalid,
 //     or HTTP status 500 (Internal Server Error) if banning any user fails.
+//
 // @Summary		Bulk Ban Members
 // @Description	Ban multiple users in the guild at once.
 // @Tags			Bans

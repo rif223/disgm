@@ -20,6 +20,7 @@ type Message = models.Message
 // Returns:
 //   - On success, it returns the list of messages as JSON with HTTP status 200.
 //   - On failure, it returns an HTTP status 500 and an error message if the messages cannot be retrieved.
+//
 // @Summary		Get Channel Messages
 // @Description	Retrieve all messages from a specific channel.
 // @Tags			Messages
@@ -50,6 +51,7 @@ func GetChannelMessages(c *fiber.Ctx, s *discordgo.Session) error {
 // Returns:
 //   - On success, it returns the message as JSON with HTTP status 200.
 //   - On failure, it returns an HTTP status 500 and an error message if the message cannot be retrieved.
+//
 // @Summary		Get Channel Message
 // @Description	Retrieve a specific message by ID from a channel.
 // @Tags			Messages
@@ -83,6 +85,7 @@ func GetChannelMessage(c *fiber.Ctx, s *discordgo.Session) error {
 // Returns:
 //   - On success, it returns the sent message as JSON with HTTP status 200.
 //   - On failure, it returns an HTTP status 500 and an error message if the message cannot be sent.
+//
 // @Summary		Send Channel Message
 // @Description	Send a new message to a specific channel.
 // @Tags			Messages
@@ -119,6 +122,7 @@ func SendChannelMessage(c *fiber.Ctx, s *discordgo.Session) error {
 // Returns:
 //   - On success, it returns the edited message as JSON with HTTP status 200.
 //   - On failure, it returns an HTTP status 500 and an error message if the message cannot be edited.
+//
 // @Summary		Edit Channel Message
 // @Description	Edit a specific message in a channel by ID.
 // @Tags			Messages
@@ -159,6 +163,7 @@ func EditChannelMessage(c *fiber.Ctx, s *discordgo.Session) error {
 // Returns:
 //   - On success, it returns HTTP status 204 (No Content) if the message is successfully deleted.
 //   - On failure, it returns an HTTP status 500 and an error message if the message cannot be deleted.
+//
 // @Summary		Delete Channel Message
 // @Description	Delete a specific message in a channel by ID.
 // @Tags			Messages

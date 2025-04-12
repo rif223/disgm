@@ -23,6 +23,7 @@ type ChannelArray = []models.Channel
 // Returns:
 //   - On success, it returns a JSON list of guild channels.
 //   - On failure, it returns an HTTP status 500 (Internal Server Error) with an error message.
+//
 // @Summary		Get Guild Channels
 // @Description	Retrieve all channels from the guild.
 // @Tags			Channels
@@ -55,6 +56,7 @@ func GetGuildChannels(c *fiber.Ctx, s *discordgo.Session) error {
 // Returns:
 //   - On success, it returns the channel details as JSON.
 //   - On failure, it returns an HTTP status 500 (Internal Server Error) with an error message.
+//
 // @Summary		Get Guild Channel
 // @Description	Retrieve a specific channel from the guild by ID.
 // @Tags			Channels
@@ -93,6 +95,7 @@ func GetGuildChannel(c *fiber.Ctx, s *discordgo.Session) error {
 //   - On success, it returns the newly created channel as JSON.
 //   - On failure, it returns an HTTP status 400 (Bad Request) if the request body is invalid,
 //     or an HTTP status 500 (Internal Server Error) if channel creation fails.
+//
 // @Summary		Create Guild Channel
 // @Description	Create a new channel in the guild.
 // @Tags			Channels
@@ -134,6 +137,7 @@ func CreateGuildChannel(c *fiber.Ctx, s *discordgo.Session) error {
 //   - On success, it returns the updated channel as JSON.
 //   - On failure, it returns an HTTP status 400 (Bad Request) if the request body is invalid,
 //     or an HTTP status 500 (Internal Server Error) if the update fails.
+//
 // @Summary		Update Guild Channel
 // @Description	Update a specific channel in the guild.
 // @Tags			Channels
@@ -172,6 +176,7 @@ func UpdateGuildChannel(c *fiber.Ctx, s *discordgo.Session) error {
 // Returns:
 //   - On success, it returns the details of the deleted channel as JSON.
 //   - On failure, it returns an HTTP status 500 (Internal Server Error) with an error message.
+//
 // @Summary		Delete Guild Channel
 // @Description	Delete a specific channel in the guild.
 // @Tags			Channels
@@ -210,6 +215,7 @@ func DeleteGuildChannel(c *fiber.Ctx, s *discordgo.Session) error {
 //   - On success, it returns HTTP status 204 (No Content).
 //   - On failure, it returns an HTTP status 400 (Bad Request) if the request body is invalid,
 //     or an HTTP status 500 (Internal Server Error) if permission updates fail.
+//
 // @Summary		Edit Channel Permissions
 // @Description	Edit permissions for a specific channel in the guild.
 // @Tags			Channels
@@ -251,6 +257,7 @@ func EditChannelPermissions(c *fiber.Ctx, s *discordgo.Session) error {
 // Returns:
 //   - On success, it returns HTTP status 204 (No Content).
 //   - On failure, it returns an HTTP status 500 (Internal Server Error) with an error message.
+//
 // @Summary		Delete Channel Permissions
 // @Description	Delete a specific permission overwrite for a channel.
 // @Tags			Channels
