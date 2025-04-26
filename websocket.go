@@ -33,10 +33,18 @@ func NewWebSocket(conn *websocket.Conn, id string) (*WS, error) {
 
 	// Register the client with their unique ID
 	clients[conn] = id
-	log.Printf("[%s] Client connected!", id)
+	// time id status ip method path msg
+	log.Printf("%s | %s | %s | %s | %s | %s\n",
+		id,
+		"\u001b[92m OK \u001b[0m",
+		conn.IP(),
+		"\u001b[94m WS \u001b[0m",
+		"/ws",
+		"Client connected!",
+	)
 
 	// Send a welcome message to the client
-	err := conn.WriteMessage(websocket.TextMessage, []byte("Welcome! You are connected."))
+	err := conn.WriteMessage(websocket.TextMessage, []byte("You are connected."))
 	if err != nil {
 		return nil, err
 	}
@@ -49,12 +57,19 @@ func NewWebSocket(conn *websocket.Conn, id string) (*WS, error) {
 
 // handleMessages continuously listens for messages from the connected client
 // and logs the received messages. It also handles client disconnections.
-func (ws *WS) handleMessages(messageHandlerFunc func(id string, msg []byte)) {
+func (ws *WS) handleMessages(messageHandlerFunc func(ws *WS, id string, msg []byte)) {
 	defer func() {
 		// Close the connection and remove the client from the map on disconnect
 		ws.conn.Close()
 		delete(clients, ws.conn)
-		log.Printf("[%s] Client disconnected!", ws.id)
+		log.Printf("%s | %s | %s | %s | %s | %s\n",
+			ws.id,
+			"\u001b[92m OK \u001b[0m",
+			ws.conn.IP(),
+			"\u001b[94m WS \u001b[0m",
+			"/ws",
+			"Client disconnected!",
+		)
 	}()
 
 	// Loop to continuously read messages from the WebSocket connection
@@ -62,10 +77,17 @@ func (ws *WS) handleMessages(messageHandlerFunc func(id string, msg []byte)) {
 		_, msg, err := ws.conn.ReadMessage() // Read the message from the client
 		if err != nil {
 			// Log any errors (like client disconnection or message read error)
-			log.Printf("error: %v", err)
+			log.Printf("%s | %s | %s | %s | %s | %s\n",
+				ws.id,
+				"\u001b[91m ERROR \u001b[0m",
+				ws.conn.IP(),
+				"\u001b[94m WS \u001b[0m",
+				"/ws",
+				err.Error(),
+			)
 			break
 		}
-		messageHandlerFunc(ws.id, msg) // Call the message handler function with the client ID and message
+		messageHandlerFunc(ws, ws.id, msg) // Call the message handler function with the client ID and message
 	}
 }
 
