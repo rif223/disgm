@@ -82,7 +82,7 @@ func New(s *discordgo.Session, options ...Options) (d *Disgm, err error) {
 					"/ws",
 					msg,
 				)
-				log.Printf("[%s] %s", id, msg) // Default message handler function.
+				// Default message handler function.
 			}
 		}
 	}
