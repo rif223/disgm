@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log"
 	"slices"
-	"strings"
 
 	"github.com/bwmarrin/discordgo"
 	"github.com/gofiber/contrib/websocket"
@@ -221,7 +220,7 @@ func registerDiscordHandlers(s *discordgo.Session) {
 //   - On success, logs a message indicating the actual port the server is listening on.
 func (d *Disgm) Listen(port ...string) (err error) {
 	if len(port) == 0 || port[0] == "" {
-		port = append(port, ":90")
+		port = append(port, ":8042")
 	}
 
 	// Starts the Fiber server in a separate goroutine
@@ -230,6 +229,6 @@ func (d *Disgm) Listen(port ...string) (err error) {
 			log.Printf("Failed to start Fiber server: %v", err) // Logs any startup errors
 		}
 	}()
-	log.Printf("Server started at port: %v", strings.Split(port[0], ":")[1]) // Logs startup message
+	//log.Printf("Server started at port: %v", strings.Split(port[0], ":")[1]) // Logs startup message
 	return err
 }
