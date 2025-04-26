@@ -34,7 +34,7 @@ func NewWebSocket(conn *websocket.Conn, id string) (*WS, error) {
 	// Register the client with their unique ID
 	clients[conn] = id
 	// time id status ip method path msg
-	log.Printf("%s | %s | %s | %s | %s | %s\n",
+	log.Printf("| %s | %s | %s | %s | %s | %s\n",
 		id,
 		"\u001b[92m OK \u001b[0m",
 		conn.IP(),
@@ -62,7 +62,7 @@ func (ws *WS) handleMessages(messageHandlerFunc func(ws *WS, id string, msg []by
 		// Close the connection and remove the client from the map on disconnect
 		ws.conn.Close()
 		delete(clients, ws.conn)
-		log.Printf("%s | %s | %s | %s | %s | %s\n",
+		log.Printf("| %s | %s | %s | %s | %s | %s\n",
 			ws.id,
 			"\u001b[92m OK \u001b[0m",
 			ws.conn.IP(),
@@ -77,7 +77,7 @@ func (ws *WS) handleMessages(messageHandlerFunc func(ws *WS, id string, msg []by
 		_, msg, err := ws.conn.ReadMessage() // Read the message from the client
 		if err != nil {
 			// Log any errors (like client disconnection or message read error)
-			log.Printf("%s | %s | %s | %s | %s | %s\n",
+			log.Printf("| %s | %s | %s | %s | %s | %s\n",
 				ws.id,
 				"\u001b[91m ERROR \u001b[0m",
 				ws.conn.IP(),
