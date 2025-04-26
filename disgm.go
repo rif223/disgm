@@ -76,9 +76,9 @@ func New(s *discordgo.Session, options ...Options) (d *Disgm, err error) {
 			opt.WSMessageHandlerFunc = func(ws *WS, id string, msg []byte) {
 				log.Printf("| %s | %s | %s | %s | %s | %s\n",
 					id,
-					"\u001b[92m OK \u001b[0m",
+					"\u001b[92m OK\u001b[0m",
 					ws.conn.IP(),
-					"\u001b[94m WS \u001b[0m",
+					"\u001b[94m WS\u001b[0m",
 					"/ws",
 					msg,
 				)
@@ -149,9 +149,9 @@ func (d *Disgm) RegisterWebSocket() {
 		if err != nil {
 			log.Printf("| %s | %s | %s | %s | %s | %s\n",
 				ws.id,
-				"\u001b[91m ERROR \u001b[0m",
+				"\u001b[91m ERR\u001b[0m",
 				ws.conn.IP(),
-				"\u001b[94m WS \u001b[0m",
+				"\u001b[94m WS\u001b[0m",
 				"/ws",
 				err.Error(),
 			)

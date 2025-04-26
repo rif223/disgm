@@ -36,9 +36,9 @@ func NewWebSocket(conn *websocket.Conn, id string) (*WS, error) {
 	// time id status ip method path msg
 	log.Printf("| %s | %s | %s | %s | %s | %s\n",
 		id,
-		"\u001b[92m OK \u001b[0m",
+		"\u001b[92m OK\u001b[0m",
 		conn.IP(),
-		"\u001b[94m WS \u001b[0m",
+		"\u001b[94m WS\u001b[0m",
 		"/ws",
 		"Client connected!",
 	)
@@ -64,9 +64,9 @@ func (ws *WS) handleMessages(messageHandlerFunc func(ws *WS, id string, msg []by
 		delete(clients, ws.conn)
 		log.Printf("| %s | %s | %s | %s | %s | %s\n",
 			ws.id,
-			"\u001b[92m OK \u001b[0m",
+			"\u001b[92m OK\u001b[0m",
 			ws.conn.IP(),
-			"\u001b[94m WS \u001b[0m",
+			"\u001b[94m WS\u001b[0m",
 			"/ws",
 			"Client disconnected!",
 		)
@@ -79,9 +79,9 @@ func (ws *WS) handleMessages(messageHandlerFunc func(ws *WS, id string, msg []by
 			// Log any errors (like client disconnection or message read error)
 			log.Printf("| %s | %s | %s | %s | %s | %s\n",
 				ws.id,
-				"\u001b[91m ERROR \u001b[0m",
+				"\u001b[91mERR\u001b[0m",
 				ws.conn.IP(),
-				"\u001b[94m WS \u001b[0m",
+				"\u001b[94m WS\u001b[0m",
 				"/ws",
 				err.Error(),
 			)
