@@ -7,6 +7,7 @@ import (
 )
 
 type ChannelArray = []models.Channel
+type InviteArray = []models.Invite
 
 // GetGuildChannels retrieves all channels for a specific guild.
 //
@@ -193,6 +194,86 @@ func DeleteGuildChannel(c *fiber.Ctx, s *discordgo.Session) error {
 	}
 
 	return c.JSON(channel)
+}
+
+// GetGuildChannelInvites retrieves all active invites for a specific channel.
+//
+// This function fetches all invite links associated with a given channel within a guild.
+// The channel ID is passed as a path parameter in the request URL.
+//
+// Parameters:
+//   - c: *fiber.Ctx – The Fiber context used to handle HTTP requests and responses.
+//   - s: *discordgo.Session – The DiscordGo session used to interact with the Discord API.
+//
+// Request Parameters:
+//   - channelid: The ID of the channel whose invites should be retrieved.
+//
+// Returns:
+//   - On success, returns a JSON array of invite objects.
+//   - On failure, returns HTTP status 500 (Internal Server Error) with an error message.
+//
+// @Summary		Get Channel Invites
+// @Description	Retrieve all invites for a specific channel in the guild.
+// @Tags			Channels
+// @Param			channelid	path		string	true	"Channel ID"
+// @Success		200			{array}		InviteArray
+// @Failure		500			{object}	error
+// @Router			/api/guild/channels/{channelid}/invites [get]
+func GetGuildChannelInvites(c *fiber.Ctx, s *discordgo.Session) error {
+	channelID := c.Params("channelid")
+
+	invites, err := s.ChannelInvites(channelID)
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).SendString("Failed to retrieve channel invites: " + err.Error())
+	}
+
+	return c.JSON(invites)
+}
+
+// CreateGuildChannelInvite creates an invite link for a specific channel.
+//
+// This function creates an invite for a specified channel within a guild. The channel ID is obtained
+// from the request parameters, and the invite settings (e.g., max age, max uses) are provided in the
+// request body as JSON.
+//
+// Parameters:
+//   - c: *fiber.Ctx – The Fiber context used to handle HTTP requests and responses.
+//   - s: *discordgo.Session – The DiscordGo session used to interact with the Discord API.
+//
+// Request Parameters:
+//   - channelid: The ID of the channel to create an invite for.
+//
+// Request Body:
+//   - A JSON object containing invite parameters such as max_age, max_uses, temporary, and unique.
+//
+// Returns:
+//   - On success, returns the created invite as JSON.
+//   - On failure, returns HTTP 400 if the body is invalid, or HTTP 500 if the invite creation fails.
+//
+// @Summary		Create Channel Invite
+// @Description	Create an invite for a specific channel in the guild.
+// @Tags			Channels
+// @Param			channelid	path		string					true	"Channel ID"
+// @Param			inviteData	body		models.InviteCreate	true	"Invite creation data"
+// @Success		201			{object}	models.Invite
+// @Failure		400			{object}	error
+// @Failure		500			{object}	error
+// @Router			/api/guild/channels/{channelid}/invite [post]
+func CreateGuildChannelInvite(c *fiber.Ctx, s *discordgo.Session) error {
+	//guildID := c.Locals("ID").(string)
+	channelID := c.Params("channelid")
+
+	var inviteData discordgo.Invite
+	if err := c.BodyParser(&inviteData); err != nil {
+		return c.Status(fiber.StatusBadRequest).SendString("Invalid request body: " + err.Error())
+	}
+
+	invite, err := s.ChannelInviteCreate(channelID, inviteData)
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).SendString("Failed to create invite: " + err.Error())
+	}
+
+	return c.JSON(invite)
 }
 
 // EditChannelPermissions updates the permission overwrites for a channel.

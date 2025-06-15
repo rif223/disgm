@@ -75,6 +75,14 @@ func Router(router fiber.Router, s *discordgo.Session) {
 		return DeleteGuildChannel(c, s)
 	})
 
+	router.Get("/guild/channels/:channelid/invites", func(c *fiber.Ctx) error {
+		return GetGuildChannelInvites(c, s)
+	})
+
+	router.Post("/guild/channels/:channelid/invites", func(c *fiber.Ctx) error {
+		return CreateGuildChannelInvite(c, s)
+	})
+
 	router.Put("/guild/channels/:channelid/permissions/:overwriteid", func(c *fiber.Ctx) error {
 		return EditChannelPermissions(c, s)
 	})

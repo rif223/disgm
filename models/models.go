@@ -2,6 +2,28 @@ package models
 
 import "time"
 
+// Application represents a Discord application structure.
+type Application struct {
+	ID                  string   `json:"id,omitempty"`
+	Name                string   `json:"name"`
+	Icon                string   `json:"icon,omitempty"`
+	Description         string   `json:"description,omitempty"`
+	RPCOrigins          []string `json:"rpc_origins,omitempty"`
+	BotPublic           bool     `json:"bot_public,omitempty"`
+	BotRequireCodeGrant bool     `json:"bot_require_code_grant,omitempty"`
+	TermsOfServiceURL   string   `json:"terms_of_service_url"`
+	PrivacyProxyURL     string   `json:"privacy_policy_url"`
+	Owner               *User    `json:"owner"`
+	Summary             string   `json:"summary"`
+	VerifyKey           string   `json:"verify_key"`
+	Team                *Team    `json:"team"`
+	GuildID             string   `json:"guild_id"`
+	PrimarySKUID        string   `json:"primary_sku_id"`
+	Slug                string   `json:"slug"`
+	CoverImage          string   `json:"cover_image"`
+	Flags               int      `json:"flags,omitempty"`
+}
+
 // ApplicationCommand represents a command structure in Discord.
 type ApplicationCommand struct {
 	ID                       string                      `json:"id"`                                   // Unique ID of the command
@@ -110,6 +132,30 @@ type Channel struct {
 	DefaultThreadRateLimitPerUser *int                   `json:"default_thread_rate_limit_per_user,omitempty"` // Optional initial rate limit per user for newly created threads
 	DefaultSortOrder              *int                   `json:"default_sort_order,omitempty"`                 // Optional default sort order for forum/media channels
 	DefaultForumLayout            *int                   `json:"default_forum_layout,omitempty"`               // Optional default layout view for forum channels
+}
+
+// Invite represents a Discord invite structure.
+type Invite struct {
+	Guild             *Guild       `json:"guild"`
+	Channel           *Channel     `json:"channel"`
+	Inviter           *User        `json:"inviter"`
+	Code              string       `json:"code"`
+	CreatedAt         time.Time    `json:"created_at"`
+	MaxAge            int          `json:"max_age"`
+	Uses              int          `json:"uses"`
+	MaxUses           int          `json:"max_uses"`
+	Revoked           bool         `json:"revoked"`
+	Temporary         bool         `json:"temporary"`
+	Unique            bool         `json:"unique"`
+	TargetUser        *User        `json:"target_user"`
+	TargetType        uint8        `json:"target_type"`
+	TargetApplication *Application `json:"target_application"`
+
+	// will only be filled when using InviteWithCounts
+	ApproximatePresenceCount int `json:"approximate_presence_count"`
+	ApproximateMemberCount   int `json:"approximate_member_count"`
+
+	ExpiresAt *time.Time `json:"expires_at"`
 }
 
 // PermissionOverwrite represents an overwrite object for a channel's permissions.
@@ -338,4 +384,22 @@ type RoleParams struct {
 	Icon         string `json:"icon,omitempty"`          // The role's icon image (if the guild has the ROLE_ICONS feature)
 	UnicodeEmoji string `json:"unicode_emoji,omitempty"` // The role's unicode emoji as a standard emoji (if the guild has the ROLE_ICONS feature)
 	Mentionable  bool   `json:"mentionable"`             // Whether the role should be mentionable
+}
+
+// TeamMember structure representing a member of a team.
+type Team struct {
+	ID          string        `json:"id"`
+	Name        string        `json:"name"`
+	Description string        `json:"description"`
+	Icon        string        `json:"icon"`
+	OwnerID     string        `json:"owner_user_id"`
+	Members     []*TeamMember `json:"members"`
+}
+
+// TeamMember structure representing a member of a team.
+type TeamMember struct {
+	User            *User    `json:"user"`
+	TeamID          string   `json:"team_id"`
+	MembershipState int      `json:"membership_state"`
+	Permissions     []string `json:"permissions"`
 }
