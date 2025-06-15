@@ -121,6 +121,7 @@ func New(s *discordgo.Session, options ...Options) (d *Disgm, err error) {
 		return TokenMiddleware(d, c)
 	})
 
+	// swagger documentation setup.
 	app.Get("/swagger/*", swagger.HandlerDefault)
 
 	return
