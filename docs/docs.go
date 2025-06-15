@@ -287,6 +287,85 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/guild/channels/{channelid}/invite": {
+            "post": {
+                "description": "Create an invite for a specific channel in the guild.",
+                "tags": [
+                    "Channels"
+                ],
+                "summary": "Create Channel Invite",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Channel ID",
+                        "name": "channelid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Invite creation data",
+                        "name": "inviteData",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Invite"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/models.Invite"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {}
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/api/guild/channels/{channelid}/invites": {
+            "get": {
+                "description": "Retrieve all invites for a specific channel in the guild.",
+                "tags": [
+                    "Channels"
+                ],
+                "summary": "Get Channel Invites",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Channel ID",
+                        "name": "channelid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/definitions/models.Invite"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            }
+        },
         "/api/guild/channels/{channelid}/messages": {
             "get": {
                 "description": "Retrieve all messages from a specific channel.",
@@ -1833,6 +1912,68 @@ const docTemplate = `{
                 }
             }
         },
+        "models.Application": {
+            "type": "object",
+            "properties": {
+                "bot_public": {
+                    "type": "boolean"
+                },
+                "bot_require_code_grant": {
+                    "type": "boolean"
+                },
+                "cover_image": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "flags": {
+                    "type": "integer"
+                },
+                "guild_id": {
+                    "type": "string"
+                },
+                "icon": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "owner": {
+                    "$ref": "#/definitions/models.User"
+                },
+                "primary_sku_id": {
+                    "type": "string"
+                },
+                "privacy_policy_url": {
+                    "type": "string"
+                },
+                "rpc_origins": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "slug": {
+                    "type": "string"
+                },
+                "summary": {
+                    "type": "string"
+                },
+                "team": {
+                    "$ref": "#/definitions/models.Team"
+                },
+                "terms_of_service_url": {
+                    "type": "string"
+                },
+                "verify_key": {
+                    "type": "string"
+                }
+            }
+        },
         "models.ApplicationCommand": {
             "type": "object",
             "properties": {
@@ -2243,6 +2384,199 @@ const docTemplate = `{
                 }
             }
         },
+        "models.Guild": {
+            "type": "object",
+            "properties": {
+                "afk_channel_id": {
+                    "description": "Optional ID of AFK channel",
+                    "type": "string"
+                },
+                "afk_timeout": {
+                    "description": "AFK timeout in seconds",
+                    "type": "integer"
+                },
+                "application_id": {
+                    "description": "Optional application ID if bot-created",
+                    "type": "string"
+                },
+                "approximate_member_count": {
+                    "description": "Optional approximate number of members",
+                    "type": "integer"
+                },
+                "approximate_presence_count": {
+                    "description": "Optional approximate non-offline members",
+                    "type": "integer"
+                },
+                "banner": {
+                    "description": "Optional banner hash",
+                    "type": "string"
+                },
+                "default_message_notifications": {
+                    "description": "Default message notifications level",
+                    "type": "integer"
+                },
+                "description": {
+                    "description": "Optional description of the guild",
+                    "type": "string"
+                },
+                "discovery_splash": {
+                    "description": "Optional discovery splash hash for discoverable guilds",
+                    "type": "string"
+                },
+                "emojis": {
+                    "description": "Custom guild emojis",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Emoji"
+                    }
+                },
+                "explicit_content_filter": {
+                    "description": "Explicit content filter level",
+                    "type": "integer"
+                },
+                "features": {
+                    "description": "Enabled guild features",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "icon": {
+                    "description": "Optional icon hash",
+                    "type": "string"
+                },
+                "icon_hash": {
+                    "description": "Optional icon hash returned in the template object",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "Snowflake ID of the guild",
+                    "type": "string"
+                },
+                "max_members": {
+                    "description": "Maximum number of members for the guild",
+                    "type": "integer"
+                },
+                "max_presences": {
+                    "description": "Optional maximum presences for the guild",
+                    "type": "integer"
+                },
+                "max_stage_video_channel_users": {
+                    "description": "Maximum users in a stage video channel",
+                    "type": "integer"
+                },
+                "max_video_channel_users": {
+                    "description": "Maximum users in a video channel",
+                    "type": "integer"
+                },
+                "mfa_level": {
+                    "description": "Required MFA level for the guild",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "Name of the guild (2-100 characters)",
+                    "type": "string"
+                },
+                "nsfw_level": {
+                    "description": "NSFW level of the guild",
+                    "type": "integer"
+                },
+                "owner": {
+                    "description": "Optional flag indicating if the user is the owner of the guild",
+                    "type": "boolean"
+                },
+                "owner_id": {
+                    "description": "ID of the owner",
+                    "type": "string"
+                },
+                "permissions": {
+                    "description": "Optional total permissions for the user in the guild",
+                    "type": "string"
+                },
+                "preferred_locale": {
+                    "description": "Preferred locale of the community guild",
+                    "type": "string"
+                },
+                "premium_progress_bar_enabled": {
+                    "description": "Flag for boost progress bar enabled",
+                    "type": "boolean"
+                },
+                "premium_subscription_count": {
+                    "description": "Optional number of boosts",
+                    "type": "integer"
+                },
+                "premium_tier": {
+                    "description": "Premium tier (Server Boost level)",
+                    "type": "integer"
+                },
+                "public_updates_channel_id": {
+                    "description": "Optional public updates channel ID",
+                    "type": "string"
+                },
+                "region": {
+                    "description": "Optional voice region ID for the guild (deprecated)",
+                    "type": "string"
+                },
+                "roles": {
+                    "description": "Roles in the guild",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Role"
+                    }
+                },
+                "rules_channel_id": {
+                    "description": "Optional channel ID for community rules",
+                    "type": "string"
+                },
+                "safety_alerts_channel_id": {
+                    "description": "Optional channel ID for safety alerts",
+                    "type": "string"
+                },
+                "splash": {
+                    "description": "Optional splash hash",
+                    "type": "string"
+                },
+                "stickers": {
+                    "description": "Custom guild stickers",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Sticker"
+                    }
+                },
+                "system_channel_flags": {
+                    "description": "System channel flags",
+                    "type": "integer"
+                },
+                "system_channel_id": {
+                    "description": "Optional system channel ID for notices",
+                    "type": "string"
+                },
+                "vanity_url_code": {
+                    "description": "Optional vanity URL code for the guild",
+                    "type": "string"
+                },
+                "verification_level": {
+                    "description": "Verification level required for the guild",
+                    "type": "integer"
+                },
+                "welcome_screen": {
+                    "description": "Optional welcome screen object",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/models.WelcomeScreen"
+                        }
+                    ]
+                },
+                "widget_channel_id": {
+                    "description": "Optional channel ID for widget invite",
+                    "type": "string"
+                },
+                "widget_enabled": {
+                    "description": "Optional flag indicating if the server widget is enabled",
+                    "type": "boolean"
+                }
+            }
+        },
         "models.GuildBan": {
             "type": "object",
             "properties": {
@@ -2251,6 +2585,63 @@ const docTemplate = `{
                 },
                 "user": {
                     "$ref": "#/definitions/models.User"
+                }
+            }
+        },
+        "models.Invite": {
+            "type": "object",
+            "properties": {
+                "approximate_member_count": {
+                    "type": "integer"
+                },
+                "approximate_presence_count": {
+                    "description": "will only be filled when using InviteWithCounts",
+                    "type": "integer"
+                },
+                "channel": {
+                    "$ref": "#/definitions/models.Channel"
+                },
+                "code": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "expires_at": {
+                    "type": "string"
+                },
+                "guild": {
+                    "$ref": "#/definitions/models.Guild"
+                },
+                "inviter": {
+                    "$ref": "#/definitions/models.User"
+                },
+                "max_age": {
+                    "type": "integer"
+                },
+                "max_uses": {
+                    "type": "integer"
+                },
+                "revoked": {
+                    "type": "boolean"
+                },
+                "target_application": {
+                    "$ref": "#/definitions/models.Application"
+                },
+                "target_type": {
+                    "type": "integer"
+                },
+                "target_user": {
+                    "$ref": "#/definitions/models.User"
+                },
+                "temporary": {
+                    "type": "boolean"
+                },
+                "unique": {
+                    "type": "boolean"
+                },
+                "uses": {
+                    "type": "integer"
                 }
             }
         },
@@ -2681,6 +3072,52 @@ const docTemplate = `{
                 }
             }
         },
+        "models.Team": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "icon": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "members": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.TeamMember"
+                    }
+                },
+                "name": {
+                    "type": "string"
+                },
+                "owner_user_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.TeamMember": {
+            "type": "object",
+            "properties": {
+                "membership_state": {
+                    "type": "integer"
+                },
+                "permissions": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "team_id": {
+                    "type": "string"
+                },
+                "user": {
+                    "$ref": "#/definitions/models.User"
+                }
+            }
+        },
         "models.ThreadMember": {
             "type": "object",
             "properties": {
@@ -2838,12 +3275,12 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "1.0",
-	Host:             "localhost:90",
+	Version:          "",
+	Host:             "",
 	BasePath:         "",
 	Schemes:          []string{},
-	Title:            "Discord Guild Management API",
-	Description:      "API for managing Discord guilds using DiscordGo and Fiber.",
+	Title:            "",
+	Description:      "",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

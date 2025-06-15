@@ -391,6 +391,47 @@ definitions:
         description: Optional flag indicating if the email is verified
         type: boolean
     type: object
+  models.Application:
+    properties:
+      bot_public:
+        type: boolean
+      bot_require_code_grant:
+        type: boolean
+      cover_image:
+        type: string
+      description:
+        type: string
+      flags:
+        type: integer
+      guild_id:
+        type: string
+      icon:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      owner:
+        $ref: '#/definitions/models.User'
+      primary_sku_id:
+        type: string
+      privacy_policy_url:
+        type: string
+      rpc_origins:
+        items:
+          type: string
+        type: array
+      slug:
+        type: string
+      summary:
+        type: string
+      team:
+        $ref: '#/definitions/models.Team'
+      terms_of_service_url:
+        type: string
+      verify_key:
+        type: string
+    type: object
   models.ApplicationCommand:
     properties:
       application_id:
@@ -691,12 +732,191 @@ definitions:
         - $ref: '#/definitions/models.User'
         description: Optional user object that created the emoji
     type: object
+  models.Guild:
+    properties:
+      afk_channel_id:
+        description: Optional ID of AFK channel
+        type: string
+      afk_timeout:
+        description: AFK timeout in seconds
+        type: integer
+      application_id:
+        description: Optional application ID if bot-created
+        type: string
+      approximate_member_count:
+        description: Optional approximate number of members
+        type: integer
+      approximate_presence_count:
+        description: Optional approximate non-offline members
+        type: integer
+      banner:
+        description: Optional banner hash
+        type: string
+      default_message_notifications:
+        description: Default message notifications level
+        type: integer
+      description:
+        description: Optional description of the guild
+        type: string
+      discovery_splash:
+        description: Optional discovery splash hash for discoverable guilds
+        type: string
+      emojis:
+        description: Custom guild emojis
+        items:
+          $ref: '#/definitions/models.Emoji'
+        type: array
+      explicit_content_filter:
+        description: Explicit content filter level
+        type: integer
+      features:
+        description: Enabled guild features
+        items:
+          type: string
+        type: array
+      icon:
+        description: Optional icon hash
+        type: string
+      icon_hash:
+        description: Optional icon hash returned in the template object
+        type: string
+      id:
+        description: Snowflake ID of the guild
+        type: string
+      max_members:
+        description: Maximum number of members for the guild
+        type: integer
+      max_presences:
+        description: Optional maximum presences for the guild
+        type: integer
+      max_stage_video_channel_users:
+        description: Maximum users in a stage video channel
+        type: integer
+      max_video_channel_users:
+        description: Maximum users in a video channel
+        type: integer
+      mfa_level:
+        description: Required MFA level for the guild
+        type: integer
+      name:
+        description: Name of the guild (2-100 characters)
+        type: string
+      nsfw_level:
+        description: NSFW level of the guild
+        type: integer
+      owner:
+        description: Optional flag indicating if the user is the owner of the guild
+        type: boolean
+      owner_id:
+        description: ID of the owner
+        type: string
+      permissions:
+        description: Optional total permissions for the user in the guild
+        type: string
+      preferred_locale:
+        description: Preferred locale of the community guild
+        type: string
+      premium_progress_bar_enabled:
+        description: Flag for boost progress bar enabled
+        type: boolean
+      premium_subscription_count:
+        description: Optional number of boosts
+        type: integer
+      premium_tier:
+        description: Premium tier (Server Boost level)
+        type: integer
+      public_updates_channel_id:
+        description: Optional public updates channel ID
+        type: string
+      region:
+        description: Optional voice region ID for the guild (deprecated)
+        type: string
+      roles:
+        description: Roles in the guild
+        items:
+          $ref: '#/definitions/models.Role'
+        type: array
+      rules_channel_id:
+        description: Optional channel ID for community rules
+        type: string
+      safety_alerts_channel_id:
+        description: Optional channel ID for safety alerts
+        type: string
+      splash:
+        description: Optional splash hash
+        type: string
+      stickers:
+        description: Custom guild stickers
+        items:
+          $ref: '#/definitions/models.Sticker'
+        type: array
+      system_channel_flags:
+        description: System channel flags
+        type: integer
+      system_channel_id:
+        description: Optional system channel ID for notices
+        type: string
+      vanity_url_code:
+        description: Optional vanity URL code for the guild
+        type: string
+      verification_level:
+        description: Verification level required for the guild
+        type: integer
+      welcome_screen:
+        allOf:
+        - $ref: '#/definitions/models.WelcomeScreen'
+        description: Optional welcome screen object
+      widget_channel_id:
+        description: Optional channel ID for widget invite
+        type: string
+      widget_enabled:
+        description: Optional flag indicating if the server widget is enabled
+        type: boolean
+    type: object
   models.GuildBan:
     properties:
       reason:
         type: string
       user:
         $ref: '#/definitions/models.User'
+    type: object
+  models.Invite:
+    properties:
+      approximate_member_count:
+        type: integer
+      approximate_presence_count:
+        description: will only be filled when using InviteWithCounts
+        type: integer
+      channel:
+        $ref: '#/definitions/models.Channel'
+      code:
+        type: string
+      created_at:
+        type: string
+      expires_at:
+        type: string
+      guild:
+        $ref: '#/definitions/models.Guild'
+      inviter:
+        $ref: '#/definitions/models.User'
+      max_age:
+        type: integer
+      max_uses:
+        type: integer
+      revoked:
+        type: boolean
+      target_application:
+        $ref: '#/definitions/models.Application'
+      target_type:
+        type: integer
+      target_user:
+        $ref: '#/definitions/models.User'
+      temporary:
+        type: boolean
+      unique:
+        type: boolean
+      uses:
+        type: integer
     type: object
   models.Member:
     properties:
@@ -1002,6 +1222,36 @@ definitions:
         description: Name of the tag
         type: string
     type: object
+  models.Team:
+    properties:
+      description:
+        type: string
+      icon:
+        type: string
+      id:
+        type: string
+      members:
+        items:
+          $ref: '#/definitions/models.TeamMember'
+        type: array
+      name:
+        type: string
+      owner_user_id:
+        type: string
+    type: object
+  models.TeamMember:
+    properties:
+      membership_state:
+        type: integer
+      permissions:
+        items:
+          type: string
+        type: array
+      team_id:
+        type: string
+      user:
+        $ref: '#/definitions/models.User'
+    type: object
   models.ThreadMember:
     properties:
       flags:
@@ -1110,12 +1360,8 @@ definitions:
           $ref: '#/definitions/models.WelcomeChannel'
         type: array
     type: object
-host: localhost:90
 info:
   contact: {}
-  description: API for managing Discord guilds using DiscordGo and Fiber.
-  title: Discord Guild Management API
-  version: "1.0"
 paths:
   /api/guild:
     get:
@@ -1298,6 +1544,59 @@ paths:
           description: Internal Server Error
           schema: {}
       summary: Update Guild Channel
+      tags:
+      - Channels
+  /api/guild/channels/{channelid}/invite:
+    post:
+      description: Create an invite for a specific channel in the guild.
+      parameters:
+      - description: Channel ID
+        in: path
+        name: channelid
+        required: true
+        type: string
+      - description: Invite creation data
+        in: body
+        name: inviteData
+        required: true
+        schema:
+          $ref: '#/definitions/models.Invite'
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Invite'
+        "400":
+          description: Bad Request
+          schema: {}
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: Create Channel Invite
+      tags:
+      - Channels
+  /api/guild/channels/{channelid}/invites:
+    get:
+      description: Retrieve all invites for a specific channel in the guild.
+      parameters:
+      - description: Channel ID
+        in: path
+        name: channelid
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              items:
+                $ref: '#/definitions/models.Invite'
+              type: array
+            type: array
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: Get Channel Invites
       tags:
       - Channels
   /api/guild/channels/{channelid}/messages:

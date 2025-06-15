@@ -254,7 +254,7 @@ func GetGuildChannelInvites(c *fiber.Ctx, s *discordgo.Session) error {
 // @Description	Create an invite for a specific channel in the guild.
 // @Tags			Channels
 // @Param			channelid	path		string					true	"Channel ID"
-// @Param			inviteData	body		models.InviteCreate	true	"Invite creation data"
+// @Param			inviteData	body		models.Invite	true	"Invite creation data"
 // @Success		201			{object}	models.Invite
 // @Failure		400			{object}	error
 // @Failure		500			{object}	error
