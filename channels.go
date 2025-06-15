@@ -258,7 +258,7 @@ func GetGuildChannelInvites(c *fiber.Ctx, s *discordgo.Session) error {
 // @Success		201			{object}	models.Invite
 // @Failure		400			{object}	error
 // @Failure		500			{object}	error
-// @Router			/api/guild/channels/{channelid}/invite [post]
+// @Router			/api/guild/channels/{channelid}/invites [post]
 func CreateGuildChannelInvite(c *fiber.Ctx, s *discordgo.Session) error {
 	//guildID := c.Locals("ID").(string)
 	channelID := c.Params("channelid")

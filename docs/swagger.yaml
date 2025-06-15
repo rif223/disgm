@@ -1546,7 +1546,30 @@ paths:
       summary: Update Guild Channel
       tags:
       - Channels
-  /api/guild/channels/{channelid}/invite:
+  /api/guild/channels/{channelid}/invites:
+    get:
+      description: Retrieve all invites for a specific channel in the guild.
+      parameters:
+      - description: Channel ID
+        in: path
+        name: channelid
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              items:
+                $ref: '#/definitions/models.Invite'
+              type: array
+            type: array
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: Get Channel Invites
+      tags:
+      - Channels
     post:
       description: Create an invite for a specific channel in the guild.
       parameters:
@@ -1573,30 +1596,6 @@ paths:
           description: Internal Server Error
           schema: {}
       summary: Create Channel Invite
-      tags:
-      - Channels
-  /api/guild/channels/{channelid}/invites:
-    get:
-      description: Retrieve all invites for a specific channel in the guild.
-      parameters:
-      - description: Channel ID
-        in: path
-        name: channelid
-        required: true
-        type: string
-      responses:
-        "200":
-          description: OK
-          schema:
-            items:
-              items:
-                $ref: '#/definitions/models.Invite'
-              type: array
-            type: array
-        "500":
-          description: Internal Server Error
-          schema: {}
-      summary: Get Channel Invites
       tags:
       - Channels
   /api/guild/channels/{channelid}/messages:

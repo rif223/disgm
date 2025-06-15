@@ -287,7 +287,41 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/guild/channels/{channelid}/invite": {
+        "/api/guild/channels/{channelid}/invites": {
+            "get": {
+                "description": "Retrieve all invites for a specific channel in the guild.",
+                "tags": [
+                    "Channels"
+                ],
+                "summary": "Get Channel Invites",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Channel ID",
+                        "name": "channelid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/definitions/models.Invite"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            },
             "post": {
                 "description": "Create an invite for a specific channel in the guild.",
                 "tags": [
@@ -322,42 +356,6 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {}
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {}
-                    }
-                }
-            }
-        },
-        "/api/guild/channels/{channelid}/invites": {
-            "get": {
-                "description": "Retrieve all invites for a specific channel in the guild.",
-                "tags": [
-                    "Channels"
-                ],
-                "summary": "Get Channel Invites",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Channel ID",
-                        "name": "channelid",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "type": "array",
-                                "items": {
-                                    "$ref": "#/definitions/models.Invite"
-                                }
-                            }
-                        }
                     },
                     "500": {
                         "description": "Internal Server Error",
