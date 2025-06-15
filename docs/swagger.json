@@ -23,6 +23,50 @@
                         "schema": {}
                     }
                 }
+            },
+            "patch": {
+                "description": "Update the settings of a Discord guild.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Guild"
+                ],
+                "summary": "Update Guild",
+                "parameters": [
+                    {
+                        "description": "Guild parameters to update",
+                        "name": "guild",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.GuildParams"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/disgm.Guild"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request body",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to update guild",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
             }
         },
         "/api/guild/bans": {
@@ -2572,6 +2616,75 @@
                 },
                 "user": {
                     "$ref": "#/definitions/models.User"
+                }
+            }
+        },
+        "models.GuildParams": {
+            "type": "object",
+            "properties": {
+                "afk_channel_id": {
+                    "type": "string"
+                },
+                "afk_timeout": {
+                    "type": "integer"
+                },
+                "banner": {
+                    "type": "string"
+                },
+                "default_message_notifications": {
+                    "description": "TODO: Separate type?",
+                    "type": "integer"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "discovery_splash": {
+                    "type": "string"
+                },
+                "explicit_content_filter": {
+                    "type": "integer"
+                },
+                "features": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "icon": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "owner_id": {
+                    "type": "string"
+                },
+                "preferred_locale": {
+                    "type": "string"
+                },
+                "premium_progress_bar_enabled": {
+                    "type": "boolean"
+                },
+                "public_updates_channel_id": {
+                    "type": "string"
+                },
+                "region": {
+                    "type": "string"
+                },
+                "rules_channel_id": {
+                    "type": "string"
+                },
+                "splash": {
+                    "type": "string"
+                },
+                "system_channel_flags": {
+                    "type": "integer"
+                },
+                "system_channel_id": {
+                    "type": "string"
+                },
+                "verification_level": {
+                    "type": "integer"
                 }
             }
         },

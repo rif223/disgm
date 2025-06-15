@@ -41,6 +41,55 @@ func GetGuild(c *fiber.Ctx, s *discordgo.Session) error {
 	return c.JSON(guild)
 }
 
+// UpdateGuild updates the settings of a Discord guild.
+//
+// This function modifies the guild using the provided guild ID from the request context
+// and the new guild data parsed from the request body. It utilizes the DiscordGo session
+// to perform the update via the Discord API.
+//
+// Parameters:
+//   - c: *fiber.Ctx – The Fiber context used to handle HTTP requests and responses.
+//   - s: *discordgo.Session – The DiscordGo session used to interact with the Discord API.
+//
+// Request Context:
+//   - ID: The ID of the guild is stored in the Fiber context under the key "ID".
+//
+// Request Body:
+//   - Expects a JSON object that conforms to the discordgo.GuildParams struct,
+//     containing the fields to be updated (e.g., name, region, etc.).
+//
+// Returns:
+//   - On success, it returns the updated guild details as JSON.
+//   - On failure:
+//       - If the request body is invalid, it returns an HTTP status 400 (Bad Request).
+//       - If the Discord API request fails, it returns an HTTP status 500 (Internal Server Error).
+//
+// @Summary		Update Guild
+// @Description	Update the settings of a Discord guild.
+// @Tags			Guild
+// @Accept			json
+// @Produce		json
+// @Param			guild	body	models.GuildParams	true	"Guild parameters to update"
+// @Success		200		{object}	Guild
+// @Failure		400		{string}	string	"Invalid request body"
+// @Failure		500		{string}	string	"Failed to update guild"
+// @Router			/api/guild [patch]
+func UpdateGuild(c *fiber.Ctx, s *discordgo.Session) error {
+	guildID := c.Locals("ID").(string)
+
+	var guildData discordgo.GuildParams
+	if err := c.BodyParser(&guildData); err != nil {
+		return c.Status(fiber.StatusBadRequest).SendString("Invalid request body: " + err.Error())
+	}
+
+	guild, err := s.GuildEdit(guildID, &guildData)
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).SendString("Failed to update guild: " + err.Error())
+	}
+
+	return c.JSON(guild)
+}
+
 // GetGuildBans retrieves the list of bans for a Discord guild.
 //
 // This function fetches a list of banned members from a guild by using the guild ID,

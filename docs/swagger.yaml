@@ -880,6 +880,52 @@ definitions:
       user:
         $ref: '#/definitions/models.User'
     type: object
+  models.GuildParams:
+    properties:
+      afk_channel_id:
+        type: string
+      afk_timeout:
+        type: integer
+      banner:
+        type: string
+      default_message_notifications:
+        description: 'TODO: Separate type?'
+        type: integer
+      description:
+        type: string
+      discovery_splash:
+        type: string
+      explicit_content_filter:
+        type: integer
+      features:
+        items:
+          type: string
+        type: array
+      icon:
+        type: string
+      name:
+        type: string
+      owner_id:
+        type: string
+      preferred_locale:
+        type: string
+      premium_progress_bar_enabled:
+        type: boolean
+      public_updates_channel_id:
+        type: string
+      region:
+        type: string
+      rules_channel_id:
+        type: string
+      splash:
+        type: string
+      system_channel_flags:
+        type: integer
+      system_channel_id:
+        type: string
+      verification_level:
+        type: integer
+    type: object
   models.Invite:
     properties:
       approximate_member_count:
@@ -1375,6 +1421,35 @@ paths:
           description: Internal Server Error
           schema: {}
       summary: Get Guild
+      tags:
+      - Guild
+    patch:
+      consumes:
+      - application/json
+      description: Update the settings of a Discord guild.
+      parameters:
+      - description: Guild parameters to update
+        in: body
+        name: guild
+        required: true
+        schema:
+          $ref: '#/definitions/models.GuildParams'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/disgm.Guild'
+        "400":
+          description: Invalid request body
+          schema:
+            type: string
+        "500":
+          description: Failed to update guild
+          schema:
+            type: string
+      summary: Update Guild
       tags:
       - Guild
   /api/guild/bans:

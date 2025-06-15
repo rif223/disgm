@@ -403,3 +403,26 @@ type TeamMember struct {
 	MembershipState int      `json:"membership_state"`
 	Permissions     []string `json:"permissions"`
 }
+
+type GuildParams struct {
+	Name                        string   `json:"name,omitempty"`
+	Region                      string   `json:"region,omitempty"`
+	VerificationLevel           int      `json:"verification_level,omitempty"`
+	DefaultMessageNotifications int      `json:"default_message_notifications,omitempty"` // TODO: Separate type?
+	ExplicitContentFilter       int      `json:"explicit_content_filter,omitempty"`
+	AfkChannelID                string   `json:"afk_channel_id,omitempty"`
+	AfkTimeout                  int      `json:"afk_timeout,omitempty"`
+	Icon                        string   `json:"icon,omitempty"`
+	OwnerID                     string   `json:"owner_id,omitempty"`
+	Splash                      string   `json:"splash,omitempty"`
+	DiscoverySplash             string   `json:"discovery_splash,omitempty"`
+	Banner                      string   `json:"banner,omitempty"`
+	SystemChannelID             string   `json:"system_channel_id,omitempty"`
+	SystemChannelFlags          int      `json:"system_channel_flags,omitempty"`
+	RulesChannelID              string   `json:"rules_channel_id,omitempty"`
+	PublicUpdatesChannelID      string   `json:"public_updates_channel_id,omitempty"`
+	PreferredLocale             string   `json:"preferred_locale,omitempty"`
+	Features                    []string `json:"features,omitempty"`
+	Description                 string   `json:"description,omitempty"`
+	PremiumProgressBarEnabled   *bool    `json:"premium_progress_bar_enabled,omitempty"`
+}

@@ -15,6 +15,10 @@ func Router(router fiber.Router, s *discordgo.Session) {
 		return GetGuild(c, s)
 	})
 
+	router.Patch("/guild", func(c *fiber.Ctx) error {
+		return UpdateGuild(c, s)
+	})
+
 	router.Post("/guild/interactions/:interactionid/:interactiontoken/callback", func(c *fiber.Ctx) error {
 		return CreateInteractionCallback(c, s)
 	})
